@@ -7,8 +7,8 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
-  * All rights reserved.
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
+  * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license
   * SLA0044, the "License"; You may not use this file except in compliance with
@@ -224,7 +224,7 @@ void LoRaWAN_Init(void)
   BSP_LED_Init(LED_BLUE);
   BSP_LED_Init(LED_GREEN);
   BSP_LED_Init(LED_RED);
-  BSP_PB_Init(BUTTON_SW1, BUTTON_MODE_EXTI);
+  BSP_PB_Init(BUTTON_SW2, BUTTON_MODE_EXTI);
 
   /* Get LoRa APP version*/
   APP_LOG(TS_OFF, VLEVEL_M, "APP_VERSION:        V%X.%X.%X\r\n",
@@ -563,12 +563,6 @@ static void OnJoinRequest(LmHandlerJoinParams_t *joinParams)
     else
     {
       APP_LOG(TS_OFF, VLEVEL_M, "\r\n###### = JOIN FAILED\r\n");
-
-      if (joinParams->Mode == ACTIVATION_TYPE_OTAA) {
-          APP_LOG(TS_OFF, VLEVEL_M, "\r\n###### = RE-TRYING OTAA JOIN\r\n");
-    	/* re-try the OTAA join */
-    	LmHandlerJoin(ActivationType);
-      }
     }
   }
   /* USER CODE END OnJoinRequest_1 */
