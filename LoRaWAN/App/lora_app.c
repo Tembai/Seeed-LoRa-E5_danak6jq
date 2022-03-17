@@ -40,6 +40,10 @@
 
 /* USER CODE BEGIN Includes */
 
+
+#include "..\..\Core\Inc/applicatie.h"
+
+
 /* USER CODE END Includes */
 
 /* External variables ---------------------------------------------------------*/
@@ -250,6 +254,19 @@ void LoRaWAN_Init(void)
   UTIL_TIMER_SetPeriod(&TxLedTimer, 500);
   UTIL_TIMER_SetPeriod(&RxLedTimer, 500);
   UTIL_TIMER_SetPeriod(&JoinLedTimer, 500);
+
+//================================================================================================================================
+
+
+  UTIL_SEQ_RegTask((1 << CFG_SEQ_Task_ApplicatieInit), UTIL_SEQ_RFU, Sensor_Init);
+  UTIL_SEQ_RegTask((1 << CFG_SEQ_Task_ApplicatieData), UTIL_SEQ_RFU, Sensor_Data);
+  UTIL_SEQ_SetTask((1 << CFG_SEQ_Task_ApplicatieInit), CFG_SEQ_Prio_0);
+
+
+  //================================================================================================================================
+
+
+
 
   /* USER CODE END LoRaWAN_Init_1 */
 

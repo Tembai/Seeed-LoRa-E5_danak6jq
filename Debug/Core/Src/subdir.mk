@@ -8,6 +8,7 @@ C_SRCS += \
 ../Core/Src/adc.c \
 ../Core/Src/adc_if.c \
 ../Core/Src/dma.c \
+../Core/Src/i2c.c \
 ../Core/Src/main.c \
 ../Core/Src/rtc.c \
 ../Core/Src/stm32_lpm_if.c \
@@ -28,6 +29,7 @@ OBJS += \
 ./Core/Src/adc.o \
 ./Core/Src/adc_if.o \
 ./Core/Src/dma.o \
+./Core/Src/i2c.o \
 ./Core/Src/main.o \
 ./Core/Src/rtc.o \
 ./Core/Src/stm32_lpm_if.o \
@@ -48,6 +50,7 @@ C_DEPS += \
 ./Core/Src/adc.d \
 ./Core/Src/adc_if.d \
 ./Core/Src/dma.d \
+./Core/Src/i2c.d \
 ./Core/Src/main.d \
 ./Core/Src/rtc.d \
 ./Core/Src/stm32_lpm_if.d \
@@ -72,7 +75,7 @@ Core/Src/%.o: ../Core/Src/%.c Core/Src/subdir.mk
 clean: clean-Core-2f-Src
 
 clean-Core-2f-Src:
-	-$(RM) ./Core/Src/adc.d ./Core/Src/adc.o ./Core/Src/adc_if.d ./Core/Src/adc_if.o ./Core/Src/dma.d ./Core/Src/dma.o ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/rtc.d ./Core/Src/rtc.o ./Core/Src/stm32_lpm_if.d ./Core/Src/stm32_lpm_if.o ./Core/Src/stm32wlxx_hal_msp.d ./Core/Src/stm32wlxx_hal_msp.o ./Core/Src/stm32wlxx_it.d ./Core/Src/stm32wlxx_it.o ./Core/Src/subghz.d ./Core/Src/subghz.o ./Core/Src/sys_app.d ./Core/Src/sys_app.o ./Core/Src/sys_debug.d ./Core/Src/sys_debug.o ./Core/Src/sys_sensors.d ./Core/Src/sys_sensors.o ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/system_stm32wlxx.d ./Core/Src/system_stm32wlxx.o ./Core/Src/timer_if.d ./Core/Src/timer_if.o ./Core/Src/usart.d ./Core/Src/usart.o ./Core/Src/usart_if.d ./Core/Src/usart_if.o
+	-$(RM) ./Core/Src/adc.d ./Core/Src/adc.o ./Core/Src/adc_if.d ./Core/Src/adc_if.o ./Core/Src/dma.d ./Core/Src/dma.o ./Core/Src/i2c.d ./Core/Src/i2c.o ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/rtc.d ./Core/Src/rtc.o ./Core/Src/stm32_lpm_if.d ./Core/Src/stm32_lpm_if.o ./Core/Src/stm32wlxx_hal_msp.d ./Core/Src/stm32wlxx_hal_msp.o ./Core/Src/stm32wlxx_it.d ./Core/Src/stm32wlxx_it.o ./Core/Src/subghz.d ./Core/Src/subghz.o ./Core/Src/sys_app.d ./Core/Src/sys_app.o ./Core/Src/sys_debug.d ./Core/Src/sys_debug.o ./Core/Src/sys_sensors.d ./Core/Src/sys_sensors.o ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/system_stm32wlxx.d ./Core/Src/system_stm32wlxx.o ./Core/Src/timer_if.d ./Core/Src/timer_if.o ./Core/Src/usart.d ./Core/Src/usart.o ./Core/Src/usart_if.d ./Core/Src/usart_if.o
 
 .PHONY: clean-Core-2f-Src
 
