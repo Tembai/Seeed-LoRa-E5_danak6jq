@@ -5,3 +5,4 @@ applicatie.c:111:16:platform_write	24	static
 applicatie.c:143:16:platform_read	24	static
 applicatie.c:221:13:platform_init	4	static
 applicatie.c:232:6:I2C_scan	96	static
+applicatie.c:260:6:I2C_id	24	static

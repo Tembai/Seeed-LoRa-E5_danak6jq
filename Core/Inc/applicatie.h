@@ -26,6 +26,7 @@ int32_t Sensor_Data(void);
 
 void I2C_scan(void);
 //static int32_t test_read();
+void I2C_id(void);
 
 
 static int32_t platform_write(void *handle, uint8_t reg, const uint8_t *bufp, uint16_t len);

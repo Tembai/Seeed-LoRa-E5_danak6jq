@@ -24,6 +24,14 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+#include "sys_app.h"
+#include "stm32wlxx_hal.h"
+#include "stdint.h"
+#include "stdlib.h"
+
+
+//#include "..\..\STM32CubeIDE\Application\User\Core/sensor_app.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -100,53 +108,8 @@ int main(void)
     /* USER CODE BEGIN 3 */
 
 	  HAL_Delay(2000);
+	  I2C_id();
 
-
-	  	static const uint8_t addr = 0x76 << 1;
-	  	static const uint8_t REG = 0x00;
-
-	  //
-
-	  //  	char address = "0x5D";
-	  //	while(1){
-	  //		HAL_I2C_Master_Receive(&hi2c1, &address, &aRxBuffer, 8, 100);
-	  //		APP_LOG(TS_OFF, VLEVEL_M, "%X:  %u\n", &address,aRxBuffer);
-	  //		if (address == "0x5D"){
-	  //			address="0x7E";
-	  //		}
-	  //		else {
-	  //				break;
-	  //		}
-	  //	}
-
-	    uint8_t buf[12];
-	    int i;
-	    while(1){
-	    for ( i = 0; i < 12; i++ ) {
-	    buf[i]=0;
-	    }
-	    break;
-	    }
-	    buf[0] = REG;
-
-
-	    HAL_StatusTypeDef ret;
-
-
-	    ret=HAL_I2C_Master_Transmit(&hi2c2, addr, buf, 1, 500); //LPS22HH_I2C_ADD_H & 0xFE
-	    if ( ret != HAL_OK ) {
-	  	  APP_LOG(TS_OFF, VLEVEL_M, "Transmit doet het niet\n");
-	    }
-	    else{
-	  	  ret=HAL_I2C_Master_Receive(&hi2c2, addr, buf, 1, 500); //LPS22HH_I2C_ADD_H & 0xFE
-	  	  if ( ret != HAL_OK ) {
-	  		  APP_LOG(TS_OFF, VLEVEL_M, "Receive doet het niet\n");
-	  	  }
-	  	  }
-
-	    for ( i = 0; i < 12; i++ ) {
-	    APP_LOG(TS_OFF, VLEVEL_M, "buf:%X", (uint8_t)(buf[i]));
-	    }
 
 
 

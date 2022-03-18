@@ -256,3 +256,46 @@ void I2C_scan(void){
 	      /*--[ Scanning Done ]--*/
 }
 
+
+void I2C_id(void){
+
+
+  	static const uint8_t addr_write = 0x5D << 1;
+  	static const uint8_t addr_read = (0x5D << 1)+1;
+  	static const uint8_t REG = 0x0F;
+
+
+    uint8_t buf[3];
+    int i;
+    while(1){
+    for ( i = 0; i < 3; i++ ) {
+    buf[i]=0;
+    }
+    break;
+    }
+    buf[0] = REG;
+
+
+    HAL_StatusTypeDef ret;
+
+
+    ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, buf, 1, 500); //LPS22HH_I2C_ADD_H & 0xFE
+    if ( ret != HAL_OK ) {
+  	  APP_LOG(TS_OFF, VLEVEL_M, "Transmit doet het niet\n");
+    }
+    else{
+  	  ret=HAL_I2C_Master_Receive(&hi2c2, addr_read, buf, 1, 500); //LPS22HH_I2C_ADD_H & 0xFE
+  	  if ( ret != HAL_OK ) {
+  		  APP_LOG(TS_OFF, VLEVEL_M, "Receive doet het niet\n");
+  	  }
+  	  }
+
+    for ( i = 0; i < 3; i++ ) {
+    APP_LOG(TS_OFF, VLEVEL_M, "buf:%X\n", (uint8_t)(buf[i]));
+    }
+
+
+
+
+}
+
