@@ -47,11 +47,17 @@ void Sensor_Init(void){
 
 	  APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Init------------------------\r\n")
 
+		/*
 	  while(1){
 	  I2C_scan();
 	  HAL_Delay(5000);
 	  }
 //	  platform_read();
+ */
+
+		lps33hw_ctx_t dev_ctx; /** xxxxxxx is the used part number **/
+		dev_ctx.write_reg = platform_write;
+		dev_ctx.read_reg = platform_read;
 
 	return;
 }
@@ -108,124 +114,8 @@ int32_t Sensor_Data(void){
 
 
 
-static int32_t platform_write(void *handle, uint8_t reg, const uint8_t *bufp, uint16_t len)
-{
-	/*
-#if defined(NUCLEO_F411RE)
-  HAL_I2C_Mem_Write(handle, LPS22HH_I2C_ADD_H, reg,
-                    I2C_MEMADD_SIZE_8BIT, (uint8_t*) bufp, len, 1000);
-#elif defined(STEVAL_MKI109V3)
-  HAL_GPIO_WritePin(CS_up_GPIO_Port, CS_up_Pin, GPIO_PIN_RESET);
-  HAL_SPI_Transmit(handle, &reg, 1, 1000);
-  HAL_SPI_Transmit(handle, (uint8_t*) bufp, len, 1000);
-  HAL_GPIO_WritePin(CS_up_GPIO_Port, CS_up_Pin, GPIO_PIN_SET);
-#elif defined(SPC584B_DIS)
-  i2c_lld_write(handle,  LPS22HH_I2C_ADD_H & 0xFE, reg, (uint8_t*) bufp, len);
-#endif
-
-*/
-  return 0;
-}
 
 
-
-/*
- * @brief  Read generic device register (platform dependent)
- *
- * @param  handle    customizable argument. In this examples is used in
- *                   order to select the correct sensor bus handler.
- * @param  reg       register to read
- * @param  bufp      pointer to buffer that store the data read
- * @param  len       number of consecutive register to read
- *
- */
-//static int32_t platform_read(void *handle, uint8_t reg, uint8_t *bufp, uint16_t len)
-static int32_t platform_read(void)
-{
-//
-//	HAL_I2C_Master_Receive(handle, LPS22HH_I2C_ADD_H & 0xFE, reg, bufp, len);
-//
-//
-//  HAL_I2C_Master_Receive (I2C_HandleTypeDef * hi2c, uint16_t DevAddress, uint8_t* pData, uint16_t Size, uint32_t Timeout);
-//  ret = HAL_I2C_Master_Receive(&hi2c1, TMP102_ADDR, buf, 2, HAL_MAX_DELAY);
-//  reg |= 0x80;
-//  HAL_GPIO_WritePin(CS_up_GPIO_Port, CS_up_Pin, GPIO_PIN_RESET);
-//  HAL_SPI_Transmit(handle, &reg, 1, 1000);
-//  HAL_SPI_Receive(handle, bufp, len, 1000);
-//  HAL_GPIO_WritePin(CS_up_GPIO_Port, CS_up_Pin, GPIO_PIN_SET);
-//#elif defined(SPC584B_DIS)
-//  i2c_lld_read(handle, LPS22HH_I2C_ADD_H & 0xFE, reg, bufp, len);
-//#endif
-
-  /*##- Put I2C peripheral in reception process ############################*/
-  /* Timeout is set to 10S */
-  uint8_t aRxBuffer, ijker;
-//  while (HAL_I2C_Master_Receive(&hi2c1, (uint16_t)LPS22HH_I2C_ADD_H, aRxBuffer, 8, 100) != HAL_OK)
-//  {
-//	  APP_LOG(TS_OFF, VLEVEL_M, "while1:%d\n",i++);
-//	/* Error_Handler() function is called when Timeout error occurs.
-//	   When Acknowledge failure occurs (Slave don't acknowledge it's address)
-//	   Master restarts communication */
-//	if (HAL_I2C_GetError(&hi2c1) != HAL_I2C_ERROR_AF)
-//	{
-//	  Error_Handler();
-//	}
-//	if(i>=50){break;}
-//  }
-//
-
-//  	char address = "0x5D";
-//	while(1){
-//		HAL_I2C_Master_Receive(&hi2c1, &address, &aRxBuffer, 8, 100);
-//		APP_LOG(TS_OFF, VLEVEL_M, "%X:  %u\n", &address,aRxBuffer);
-//		if (address == "0x5D"){
-//			address="0x7E";
-//		}
-//		else {
-//				break;
-//		}
-//	}
-  APP_LOG(TS_OFF, VLEVEL_M, "   buffer leeg: %u\n",aRxBuffer);
-
-  HAL_I2C_Master_Receive(&hi2c2, 0x5D, &aRxBuffer, 8, 100); //LPS22HH_I2C_ADD_H & 0xFE
-
-//    	  APP_LOG(TS_OFF, VLEVEL_M, itoa(aRxBuffer));
-  APP_LOG(TS_OFF, VLEVEL_M, "   buffer, adres 0x5D, message: %u\n",aRxBuffer);
-  	/* Error_Handler() function is called when Timeout error occurs.
-  	   When Acknowledge failure occurs (Slave don't acknowledge it's address)
-  	   Master restarts communication */
-
-
-    HAL_I2C_Master_Receive(&hi2c2, 0x7E, &aRxBuffer, 8, 1000); //LPS22HH_I2C_ADD_L & 0xFE
-    APP_LOG(TS_OFF, VLEVEL_M, "   buffer, adres 0x7E, message: %u\n", aRxBuffer);
-  	/* Error_Handler() function is called when Timeout error occurs.
-  	   When Acknowledge failure occurs (Slave don't acknowledge it's address)
-  	   Master restarts communication */
-
-//  	if(i>=15){break;}
-
-
-//	if(aRxBuffer != ijker){APP_LOG(TS_OFF, VLEVEL_M, "er is iets gebeurd!");}
-//	else{APP_LOG(TS_OFF, VLEVEL_M, aRxBuffer, "nope...\n");}
-
-//    if(aRxBuffer != ijker){
-
-//    APP_LOG(TS_OFF, VLEVEL_M, aRxBuffer);
-//    }
-
-
-  return 0;
-}
-
-
-static void platform_init(void)
-{
-//  TIM3->CCR1 = PWM_3V3;
-//  TIM3->CCR2 = PWM_3V3;
-//  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
-//  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
-//  HAL_Delay(1000);
-}
 
 
 
@@ -261,22 +151,15 @@ void I2C_id(void){
 
 
   	static const uint8_t addr_write = 0x5D << 1;
-  	static const uint8_t addr_read = (0x5D << 1)+1;
-  	static const uint8_t REG = 0x0F;
-
-
-    uint8_t buf[3];
-    int i;
-    while(1){
-    for ( i = 0; i < 3; i++ ) {
-    buf[i]=0;
-    }
-    break;
-    }
-    buf[0] = REG;
-
-
+  	static const uint8_t addr_read = (0x5D << 1)+1;	// address LPS33HW with read bit
+  	static const uint8_t WhoAmI = 0x0F;				// register
     HAL_StatusTypeDef ret;
+    uint8_t buf[3];
+
+
+    buf[0] = WhoAmI;
+    buf[1] = 0;
+    buf[2] = 0;
 
 
     ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, buf, 1, 500); //LPS22HH_I2C_ADD_H & 0xFE
@@ -290,12 +173,22 @@ void I2C_id(void){
   	  }
   	  }
 
-    for ( i = 0; i < 3; i++ ) {
-    APP_LOG(TS_OFF, VLEVEL_M, "buf:%X\n", (uint8_t)(buf[i]));
-    }
+	  APP_LOG(TS_OFF, VLEVEL_M, "id: %X\n",buf[0]);
+
+	 return 0;
+}
+
+
+int32_t platform_write(void *handle, uint8_t Reg, const uint8_t *Bufp, uint16_t len){
+
+    ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, buf, 1, 500); //LPS22HH_I2C_ADD_H & 0xFE
+	return HAL_OK;
+}
 
 
 
+int32_t platform_read(void *handle, uint8_t Reg, uint8_t *Bufp, uint16_t len){
 
+	return 0;
 }
 

@@ -13,34 +13,30 @@
 #include "i2c.h"
 
 
-//const char* Readout();
+#define LPS33HW
+//#define LPS22HH
+//#define BMP390
 
 
-
+//======================================================================================================
 float Sensor_read();
-
-
 void Sensor_Init(void);
-
 int32_t Sensor_Data(void);
 
 void I2C_scan(void);
 //static int32_t test_read();
 void I2C_id(void);
-
-
-static int32_t platform_write(void *handle, uint8_t reg, const uint8_t *bufp, uint16_t len);
-//static int32_t platform_read(void *handle, uint8_t reg, uint8_t *bufp,
-//                             uint16_t len);
-static int32_t platform_read(void);
-//static void tx_com( uint8_t *tx_buffer, uint16_t len );
-//static void platform_delay(uint32_t ms);
-static void platform_init(void);
+//======================================================================================================
 
 
 
-//#define LPS22HH
-#define BMP390
+
+
+#ifdef LPS33HW
+int32_t platform_write(void *handle, uint8_t Reg, const uint8_t *Bufp, uint16_t len);
+int32_t platform_read(void *handle, uint8_t Reg, uint8_t *Bufp, uint16_t len);
+//static void platform_init(void);
+#endif
 
 
 
@@ -63,6 +59,7 @@ static uint8_t tx_buffer[TX_BUF_DIM];
 
 #endif
 
+//===============================================
 
 #ifdef BMP390
 #define SENSOR_BUS hi2c2
