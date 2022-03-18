@@ -33,6 +33,8 @@ void I2C_id(void);
 
 
 #ifdef LPS33HW
+static const uint8_t addr_write = 0x5D << 1;
+static const uint8_t addr_read = (0x5D << 1)+1;	// address LPS33HW with read bit
 int32_t platform_write(void *handle, uint8_t Reg, const uint8_t *Bufp, uint16_t len);
 int32_t platform_read(void *handle, uint8_t Reg, uint8_t *Bufp, uint16_t len);
 //static void platform_init(void);

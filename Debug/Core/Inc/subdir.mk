@@ -5,13 +5,16 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../Core/Inc/applicatie.c 
+../Core/Inc/applicatie.c \
+../Core/Inc/lps33hw_reg.c 
 
 OBJS += \
-./Core/Inc/applicatie.o 
+./Core/Inc/applicatie.o \
+./Core/Inc/lps33hw_reg.o 
 
 C_DEPS += \
-./Core/Inc/applicatie.d 
+./Core/Inc/applicatie.d \
+./Core/Inc/lps33hw_reg.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -21,7 +24,7 @@ Core/Inc/%.o: ../Core/Inc/%.c Core/Inc/subdir.mk
 clean: clean-Core-2f-Inc
 
 clean-Core-2f-Inc:
-	-$(RM) ./Core/Inc/applicatie.d ./Core/Inc/applicatie.o
+	-$(RM) ./Core/Inc/applicatie.d ./Core/Inc/applicatie.o ./Core/Inc/lps33hw_reg.d ./Core/Inc/lps33hw_reg.o
 
 .PHONY: clean-Core-2f-Inc
 

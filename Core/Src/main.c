@@ -107,7 +107,8 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-	  HAL_Delay(2000);
+	  HAL_Delay(500);
+//	  Sensor_Init();
 	  I2C_id();
 
 

@@ -54,10 +54,10 @@ void Sensor_Init(void){
 	  }
 //	  platform_read();
  */
-
-		lps33hw_ctx_t dev_ctx; /** xxxxxxx is the used part number **/
-		dev_ctx.write_reg = platform_write;
-		dev_ctx.read_reg = platform_read;
+//==========================================================================================
+//		lps33hw_ctx_t dev_ctx; /** xxxxxxx is the used part number **/
+//		dev_ctx.write_reg = platform_write;
+//		dev_ctx.read_reg = platform_read;
 
 	return;
 }
@@ -149,9 +149,32 @@ void I2C_scan(void){
 
 void I2C_id(void){
 
+  	static const uint8_t WhoAmI = 0x11;				// register
+    HAL_StatusTypeDef ret;
+    uint8_t buf[3];
 
-  	static const uint8_t addr_write = 0x5D << 1;
-  	static const uint8_t addr_read = (0x5D << 1)+1;	// address LPS33HW with read bit
+
+    buf[0] = WhoAmI;
+    buf[1] = 0x0;
+    buf[2] = 0;
+
+
+    ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, buf, 1, 500); //LPS22HH_I2C_ADD_H & 0xFE
+    if ( ret != HAL_OK ) {
+  	  APP_LOG(TS_OFF, VLEVEL_M, "Transmit doet het niet\n");
+    }
+    else{
+  	  ret=HAL_I2C_Master_Receive(&hi2c2, addr_read, buf, 1, 500); //LPS22HH_I2C_ADD_H & 0xFE
+  	  if ( ret != HAL_OK ) {
+  		  APP_LOG(TS_OFF, VLEVEL_M, "Receive doet het niet\n");
+  	  }
+  	  }
+
+	  APP_LOG(TS_OFF, VLEVEL_M, "id: 0x%X\n",buf[0]);
+
+
+
+/*
   	static const uint8_t WhoAmI = 0x0F;				// register
     HAL_StatusTypeDef ret;
     uint8_t buf[3];
@@ -174,15 +197,89 @@ void I2C_id(void){
   	  }
 
 	  APP_LOG(TS_OFF, VLEVEL_M, "id: %X\n",buf[0]);
+*/
 
-	 return 0;
+//  	static const uint8_t WhoAmI = 0x0F;				// register
+//    HAL_StatusTypeDef ret;
+//    uint8_t buf[3];
+//
+//
+//    buf[0] = 0x11;
+    buf[0] = WhoAmI;
+    buf[1] = 0;
+
+    uint8_t arg=1;
+//    buf[2] = 0;
+////    uint8_t arg[2];
+////	arg[0]=buf[0];
+////	arg[1]=buf[1];
+////	arg[2]=buf[2];
+//
+//	uint8_t wr;
+//	wr=0x2;
+//
+//    ret=platform_write(&hi2c2, WhoAmI, buf,1);
+
+    ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, buf, 2, 500); //LPS22HH_I2C_ADD_H & 0xFE
+
+    ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, WhoAmI, 1, 500); //LPS22HH_I2C_ADD_H & 0xFE
+	ret=HAL_I2C_Master_Receive(&hi2c2, addr_read, arg, 1, 500); //LPS22HH_I2C_ADD_H & 0xFE
+
+	APP_LOG(TS_OFF, VLEVEL_M, "val: 0x%X\n",arg);
+
+//	APP_LOG(TS_OFF, VLEVEL_M, "id1: %X\n",buf[0]);
+//
+//    ret=platform_write(&hi2c2, 0x11, wr,1);
+////    ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, buf, 1, 500); //LPS22HH_I2C_ADD_H & 0xFE
+//    if ( ret != HAL_OK ) {
+//  	  APP_LOG(TS_OFF, VLEVEL_M, "Transmit doet het niet\n");
+//    }
+//    else{
+//      ret=platform_write(&hi2c2, 0x11, buf,0);
+//  	  ret=HAL_I2C_Master_Receive(&hi2c2, addr_read, buf, 1, 500); //LPS22HH_I2C_ADD_H & 0xFE
+//  	  if ( ret != HAL_OK ) {
+//  		  APP_LOG(TS_OFF, VLEVEL_M, "Receive doet het niet\n");
+//  	  }
+//  	  }
+//
+//    /*
+//    APP_LOG(TS_OFF, VLEVEL_M, "lengte van buf:%x\n",sizeof(buf[1]));
+//    int z=0;
+//    for (int x=0;x!=sizeof(arg);x++){
+//    	if(arg[x]){
+//    		z++;
+//    }
+//    }
+//    */
+//
+////    APP_LOG(TS_OFF, VLEVEL_M, "lengte van buf:%x\n",z);
+//	APP_LOG(TS_OFF, VLEVEL_M, "id2: %X\n",buf[0]);
+
+	 return;
 }
 
 
 int32_t platform_write(void *handle, uint8_t Reg, const uint8_t *Bufp, uint16_t len){
+    HAL_StatusTypeDef ret;
+//    uint8_t buffer[len+1];
+//    uint8_t temp;
+//    for (int i=len-1;i>=-1;i--){
+//		buffer[i+1]=Bufp[i];
+//		}
+//    buffer[0]=Reg;
 
-    ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, buf, 1, 500); //LPS22HH_I2C_ADD_H & 0xFE
-	return HAL_OK;
+//    int z=0;
+//    for (int x=0;x!=sizeof(arg);x++){
+//    	if(arg[x]){
+//    		z++;
+//    }
+//    }
+
+	ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, Reg, 1, 1000);
+	if(len>0){
+		ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, Bufp, (len), 1000);
+	}
+	return ret;
 }
 
 
