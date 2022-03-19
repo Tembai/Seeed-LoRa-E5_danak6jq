@@ -101,30 +101,28 @@ int32_t Sensor_Data(void){
     whoamI = 0;
     lps33hw_device_id_get(&dev_ctx, &whoamI);
 	APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Data -> WhoAmI: %x\r\n",whoamI);
-//    if ( whoamI != LPS22HH_ID )
-//        while (1){APP_LOG(TS_OFF, VLEVEL_M, "ID klopt niet, Who Am I:%x\r\n",whoamI);
-//        } /*manage here device not found */
-//    else{
-//    	while (1){APP_LOG(TS_OFF, VLEVEL_M, "ID klopt!!!!!!!\r\n");};
-//    }
+
+//    APP_LOG(TS_OFF, VLEVEL_M, "Who Am I:%x\r\n",whoamI);
 
 
 	lps33hw_reset_set(&dev_ctx, PROPERTY_ENABLE);
-
 	do {
-	lps33hw_reset_get(&dev_ctx, &rst);
+	lps33hw_reset_get(&dev_ctx, &rst);									// software reset
 	} while (rst);
 
 	/* Enable Block Data Update */
-	  lps33hw_block_data_update_set(&dev_ctx, PROPERTY_ENABLE);
+	  lps33hw_block_data_update_set(&dev_ctx, PROPERTY_ENABLE);			// BDU bit set
 	  /* Set Output Data Rate */
-	  lps33hw_data_rate_set(&dev_ctx, LPS33HW_POWER_DOWN);
+	  lps33hw_data_rate_set(&dev_ctx, LPS33HW_POWER_DOWN);				// one-shot mode enabled
 
 	  /* Read samples in polling mode (no int) */
 	  while (1) {
 		HAL_Delay(1000);
+		lps33hw_low_power_set(&dev_ctx, PROPERTY_DISABLE);				// Low-current mode disabled
 
-	    /* Read output only if new value is available */
+		lps33hw_one_shoot_trigger_set(&dev_ctx, PROPERTY_ENABLE);		// one-shot mode triggered
+/*
+//	     Read output only if new value is available
 	    lps33hw_reg_t reg;
 	    lps33hw_read_reg(&dev_ctx, LPS33HW_STATUS, (uint8_t *)&reg, 1);
 
@@ -144,6 +142,11 @@ int32_t Sensor_Data(void){
 //	      APP_LOG(TS_OFF, VLEVEL_M, "temperature [degC]:%6.2f\r\n", temperature_degC );
 	      APP_LOG(TS_OFF, VLEVEL_M, "temperature [degC]:%x\r\n", temperature_degC );
 //	      tx_com( tx_buffer, strlen( (char const *)tx_buffer ) );
+
+	      */
+
+
+		lps33hw_low_power_set(&dev_ctx, PROPERTY_DISABLE);			// Low-current mode enabled
 	    }
 	  }
 	}
