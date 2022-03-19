@@ -117,10 +117,27 @@ int32_t Sensor_Data(void){
 
 	  /* Read samples in polling mode (no int) */
 	  while (1) {
-		HAL_Delay(1000);
+		HAL_Delay(3000);
 		lps33hw_low_power_set(&dev_ctx, PROPERTY_DISABLE);				// Low-current mode disabled
 
-		lps33hw_one_shoot_trigger_set(&dev_ctx, PROPERTY_ENABLE);		// one-shot mode triggered
+
+
+
+
+	    if (reg.status.p_da) {
+	    	lps33hw_one_shoot_trigger_set(&dev_ctx, PROPERTY_ENABLE);		// one-shot mode triggered
+			memset(&data_raw_pressure, 0x00, sizeof(int32_t));
+			lps33hw_pressure_raw_get(&dev_ctx, &data_raw_pressure);
+			APP_LOG(TS_OFF, VLEVEL_M, "raw pressure:%x\r\n", data_raw_pressure);
+			pressure_hPa = lps33hw_from_lsb_to_hpa(data_raw_pressure);
+			APP_LOG(TS_OFF, VLEVEL_M, "pressure [hPa]:%x\r\n", pressure_hPa);
+//	      APP_LOG(TS_OFF, VLEVEL_M, "pressure [hPa]:%6.2f\r\n", pressure_hPa);
+//	      tx_com( tx_buffer, strlen( (char const *)tx_buffer ) );
+	    }
+
+
+
+
 /*
 //	     Read output only if new value is available
 	    lps33hw_reg_t reg;
@@ -147,6 +164,7 @@ int32_t Sensor_Data(void){
 
 
 		lps33hw_low_power_set(&dev_ctx, PROPERTY_DISABLE);			// Low-current mode enabled
+
 	    }
 	  }
 	}
