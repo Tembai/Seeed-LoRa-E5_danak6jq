@@ -118,7 +118,7 @@ int32_t Sensor_Data(void){
 	/* Enable Block Data Update */
 	  lps33hw_block_data_update_set(&dev_ctx, PROPERTY_ENABLE);
 	  /* Set Output Data Rate */
-	  lps33hw_data_rate_set(&dev_ctx, LPS33HW_ODR_10_Hz);
+	  lps33hw_data_rate_set(&dev_ctx, LPS33HW_POWER_DOWN);
 
 	  /* Read samples in polling mode (no int) */
 	  while (1) {
