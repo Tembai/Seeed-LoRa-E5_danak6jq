@@ -38,6 +38,20 @@ static const uint8_t addr_read = (0x5D << 1)+1;	// address LPS33HW with read bit
 int32_t platform_write(void *handle, uint8_t Reg, const uint8_t *Bufp, uint16_t len);
 int32_t platform_read(void *handle, uint8_t Reg, uint8_t *Bufp, uint16_t len);
 //static void platform_init(void);
+void I2C_software_reset(void);
+
+
+
+/* Private macro -------------------------------------------------------------*/
+#define TX_BUF_DIM          1000
+/* Private variables ---------------------------------------------------------*/
+static uint32_t data_raw_pressure;
+static int16_t data_raw_temperature;
+static float pressure_hPa;
+static float temperature_degC;
+static uint8_t whoamI, rst;
+static uint8_t tx_buffer[TX_BUF_DIM];
+
 #endif
 
 

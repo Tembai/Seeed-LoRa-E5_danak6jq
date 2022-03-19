@@ -19,6 +19,11 @@
 //#include <stm32wlxx_hal_i2c.c>
 #endif
 
+#ifdef LPS33HW
+#include "lps33hw_reg.h"
+
+#endif
+
 
 
 //const char* Readout(){
@@ -62,15 +67,11 @@ void Sensor_Init(void){
 	return;
 }
 
+
 int32_t Sensor_Data(void){
-	int data = 45;
-
-//	I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint32_t Trials, uint32_t Timeout
 
 
-
-//	APP_LOG(TS_OFF, VLEVEL_M, "Is sensor klaar om te communiceren?",HAL_I2C_IsDeviceReady(I2C_HandleTypeDef &hi2c1, uint16_t DevAddress, uint32_t Trials, uint32_t Timeout));
-//	APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Data--------------------------\r\n");
+	APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Data--------------------------\r\n");
 
 
 
@@ -81,24 +82,25 @@ int32_t Sensor_Data(void){
     /* Wait sensor boot time */
 
 //    platform_delay(BOOT_TIME);
+	HAL_Delay(2000);
 
 
 	//	APP_LOG(TS_OFF, VLEVEL_M, "\r\n");
 
-//	stmdev_ctx_t dev_ctx;
-//    lps22hh_reg_t reg;
-//
-//    /* Initialize mems driver interface */
-//    dev_ctx.write_reg = platform_write;
-//    dev_ctx.read_reg = platform_read;
-//    dev_ctx.handle = &SENSOR_BUS;
+	stmdev_ctx_t dev_ctx;
+
+    /* Initialize mems driver interface */
+    dev_ctx.write_reg = platform_write;
+    dev_ctx.read_reg = platform_read;
+    dev_ctx.handle = &hi2c2;
 //
 //    /* Initialize platform specific hardware */
 //    platform_init();
 //    HAL_Delay(5);
 //    /* Check device ID */
-//    whoamI = 0;
-//    lps22hh_device_id_get(&dev_ctx, &whoamI);
+    whoamI = 0;
+    lps33hw_device_id_get(&dev_ctx, &whoamI);
+	APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Data -> WhoAmI: %x\r\n",whoamI);
 //    if ( whoamI != LPS22HH_ID )
 //        while (1){APP_LOG(TS_OFF, VLEVEL_M, "ID klopt niet, Who Am I:%x\r\n",whoamI);
 //        } /*manage here device not found */
@@ -106,8 +108,45 @@ int32_t Sensor_Data(void){
 //    	while (1){APP_LOG(TS_OFF, VLEVEL_M, "ID klopt!!!!!!!\r\n");};
 //    }
 
-	return data;
-}
+
+	lps33hw_reset_set(&dev_ctx, PROPERTY_ENABLE);
+
+	do {
+	lps33hw_reset_get(&dev_ctx, &rst);
+	} while (rst);
+
+	/* Enable Block Data Update */
+	  lps33hw_block_data_update_set(&dev_ctx, PROPERTY_ENABLE);
+	  /* Set Output Data Rate */
+	  lps33hw_data_rate_set(&dev_ctx, LPS33HW_ODR_10_Hz);
+
+	  /* Read samples in polling mode (no int) */
+	  while (1) {
+		HAL_Delay(1000);
+
+	    /* Read output only if new value is available */
+	    lps33hw_reg_t reg;
+	    lps33hw_read_reg(&dev_ctx, LPS33HW_STATUS, (uint8_t *)&reg, 1);
+
+	    if (reg.status.p_da) {
+	      memset(&data_raw_pressure, 0x00, sizeof(int32_t));
+	      lps33hw_pressure_raw_get(&dev_ctx, &data_raw_pressure);
+	      pressure_hPa = lps33hw_from_lsb_to_hpa(data_raw_pressure);
+//	      APP_LOG(TS_OFF, VLEVEL_M, "pressure [hPa]:%6.2f\r\n", pressure_hPa);
+	      APP_LOG(TS_OFF, VLEVEL_M, "pressure [hPa]:%x\r\n", pressure_hPa);
+//	      tx_com( tx_buffer, strlen( (char const *)tx_buffer ) );
+	    }
+
+	    if (reg.status.t_da) {
+	      memset(&data_raw_temperature, 0x00, sizeof(int16_t));
+	      lps33hw_temperature_raw_get(&dev_ctx, &data_raw_temperature);
+	      temperature_degC = lps33hw_from_lsb_to_degc(data_raw_temperature);
+//	      APP_LOG(TS_OFF, VLEVEL_M, "temperature [degC]:%6.2f\r\n", temperature_degC );
+	      APP_LOG(TS_OFF, VLEVEL_M, "temperature [degC]:%x\r\n", temperature_degC );
+//	      tx_com( tx_buffer, strlen( (char const *)tx_buffer ) );
+	    }
+	  }
+	}
 
 
 
@@ -147,6 +186,16 @@ void I2C_scan(void){
 }
 
 
+void I2C_software_reset(void){
+    HAL_StatusTypeDef ret;
+    uint8_t var[1];
+  	static const uint8_t CTRL_REG2 = 0x11;				// register
+    var[0]=0x14;
+    ret=platform_write(&hi2c2, CTRL_REG2, var, 1);
+    return;
+}
+
+
 void I2C_id(void){
 
   	static const uint8_t WhoAmI = 0x0F;				// register
@@ -156,7 +205,7 @@ void I2C_id(void){
     uint8_t var[1];
     var[0]=0x0;
 
-
+    ret=platform_write(&hi2c2, CTRL_REG2, var, 1);
     ret=platform_read(&hi2c2, WhoAmI, var, 1);
 
 	APP_LOG(TS_OFF, VLEVEL_M, "WhoAmI ID: 0x%X\n",var[0]);

@@ -95,6 +95,7 @@ int main(void)
   MX_LoRaWAN_Init();
   MX_I2C2_Init();
   /* USER CODE BEGIN 2 */
+//  I2C_software_reset();
 
   /* USER CODE END 2 */
 
@@ -107,9 +108,9 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-	  HAL_Delay(500);
+	  Sensor_Data();
 //	  Sensor_Init();
-	  I2C_id();
+//	  I2C_id();
 
 
 

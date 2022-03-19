@@ -45,7 +45,8 @@ Core/Inc/applicatie.o: ../Core/Inc/applicatie.c ../Core/Inc/applicatie.h \
  ../Core/Inc/sys_app.h ../Core/Inc/sys_conf.h \
  ../Utilities/trace/adv_trace/stm32_adv_trace.h \
  ../Core/Inc/utilities_conf.h ../Drivers/CMSIS/Include/cmsis_compiler.h \
- ../Utilities/misc/stm32_mem.h ../Utilities/misc/stm32_tiny_vsnprintf.h
+ ../Utilities/misc/stm32_mem.h ../Utilities/misc/stm32_tiny_vsnprintf.h \
+ ../Core/Inc/lps33hw_reg.h
 
 ../Core/Inc/applicatie.h:
 
@@ -150,3 +151,5 @@ Core/Inc/applicatie.o: ../Core/Inc/applicatie.c ../Core/Inc/applicatie.h \
 ../Utilities/misc/stm32_mem.h:
 
 ../Utilities/misc/stm32_tiny_vsnprintf.h:
+
+../Core/Inc/lps33hw_reg.h:
