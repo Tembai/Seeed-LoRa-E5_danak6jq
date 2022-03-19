@@ -3,5 +3,5 @@ applicatie.c:45:6:Sensor_Init	8	static
 applicatie.c:65:9:Sensor_Data	16	static
 applicatie.c:122:6:I2C_scan	96	static
 applicatie.c:150:6:I2C_id	24	static
-applicatie.c:262:9:platform_write	40	static
-applicatie.c:287:9:platform_read	24	static
+applicatie.c:268:9:platform_write	40	static
+applicatie.c:293:9:platform_read	24	static

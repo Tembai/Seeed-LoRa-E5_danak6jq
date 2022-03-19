@@ -158,13 +158,16 @@ void I2C_id(void){
     buf[1] = 0x0;
     buf[2] = 0;
 
+    uint8_t var;
+    var=0;
 
-    ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, buf, 1, 500); //LPS22HH_I2C_ADD_H & 0xFE
+
+    ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, WhoAmI, 1, 500); //LPS22HH_I2C_ADD_H & 0xFE
     if ( ret != HAL_OK ) {
   	  APP_LOG(TS_OFF, VLEVEL_M, "Transmit doet het niet\n");
     }
     else{
-  	  ret=HAL_I2C_Master_Receive(&hi2c2, addr_read, buf, 1, 500); //LPS22HH_I2C_ADD_H & 0xFE
+  	  ret=HAL_I2C_Master_Receive(&hi2c2, addr_read, var, 1, 500); //LPS22HH_I2C_ADD_H & 0xFE
   	  if ( ret != HAL_OK ) {
   		  APP_LOG(TS_OFF, VLEVEL_M, "Receive doet het niet\n");
   	  }
@@ -205,8 +208,8 @@ void I2C_id(void){
 //
 //
 //    buf[0] = 0x11;
-    buf[0] = WhoAmI;
-    buf[1] = 0;
+//    buf[0] = WhoAmI;
+//    buf[1] = 0;
 
     uint8_t arg=1;
 //    buf[2] = 0;
@@ -220,12 +223,15 @@ void I2C_id(void){
 //
 //    ret=platform_write(&hi2c2, WhoAmI, buf,1);
 
+    /*
     ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, buf, 2, 500); //LPS22HH_I2C_ADD_H & 0xFE
 
     ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, WhoAmI, 1, 500); //LPS22HH_I2C_ADD_H & 0xFE
 	ret=HAL_I2C_Master_Receive(&hi2c2, addr_read, arg, 1, 500); //LPS22HH_I2C_ADD_H & 0xFE
 
 	APP_LOG(TS_OFF, VLEVEL_M, "val: 0x%X\n",arg);
+
+	*/
 
 //	APP_LOG(TS_OFF, VLEVEL_M, "id1: %X\n",buf[0]);
 //
