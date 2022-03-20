@@ -363,7 +363,7 @@ int32_t platform_read(void *handle, uint8_t Reg, uint8_t *Bufp, uint16_t len){
 
 
 
-	ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, reg, 0, 1000);
+	ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, reg, 1, 1000);
 	if(len>0 && !ret){
 		ret=HAL_I2C_Master_Receive(&hi2c2, addr_read, Bufp, len, 1000);
 	}
