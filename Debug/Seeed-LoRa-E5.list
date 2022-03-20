@@ -3026,8 +3026,8 @@ int main(void)
 	reg[0]=0x11;
  8001846:	2311      	movs	r3, #17
  8001848:	713b      	strb	r3, [r7, #4]
-	reg[1]=0x9;
- 800184a:	2309      	movs	r3, #9
+	reg[1]=0x11;
+ 800184a:	2311      	movs	r3, #17
  800184c:	717b      	strb	r3, [r7, #5]
 
 	ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, reg, 2, 1000);				// one shot

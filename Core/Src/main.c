@@ -122,7 +122,7 @@ int main(void)
 	}
 
 	reg[0]=0x11;
-	reg[1]=0x9;
+	reg[1]=0x11;
 
 	ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, reg, 2, 1000);				// one shot
 
