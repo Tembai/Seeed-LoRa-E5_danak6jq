@@ -245,7 +245,7 @@ void I2C_id(void){
     uint8_t var[1];
     var[0]=0x0;
 
-    ret=platform_write(&hi2c2, CTRL_REG2, var, 1);
+//    ret=platform_write(&hi2c2, CTRL_REG2, var, 1);
     ret=platform_read(&hi2c2, WhoAmI, var, 1);
 
 	APP_LOG(TS_OFF, VLEVEL_M, "WhoAmI ID: 0x%X\n",var[0]);
