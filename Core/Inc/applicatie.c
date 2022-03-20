@@ -64,6 +64,11 @@ void Sensor_Init(void){
 //		dev_ctx.write_reg = platform_write;
 //		dev_ctx.read_reg = platform_read;
 
+		  uint8_t reg[3];
+		  int32_t ret;
+
+		  ret =  lps33hw_read_reg(ctx, LPS33HW_PRESS_OUT_XL, reg, 3);
+
 	return;
 }
 
@@ -96,11 +101,6 @@ int32_t Sensor_Data(void){
 //
 //    /* Initialize platform specific hardware */
 //    platform_init();
-//    HAL_Delay(5);
-//    /* Check device ID */
-    whoamI = 0;
-    lps33hw_device_id_get(&dev_ctx, &whoamI);
-	APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Data -> WhoAmI: %x\r\n",whoamI);
 
 //    APP_LOG(TS_OFF, VLEVEL_M, "Who Am I:%x\r\n",whoamI);
 
@@ -110,12 +110,19 @@ int32_t Sensor_Data(void){
 	lps33hw_reset_get(&dev_ctx, &rst);									// software reset
 	} while (rst);
 
+	    HAL_Delay(50);
+	    /* Check device ID */
+	    whoamI = 0;
+	    lps33hw_device_id_get(&dev_ctx, &whoamI);
+		APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Data -> WhoAmI: %x\r\n",whoamI);
+
+
 	/* Enable Block Data Update */
 	  lps33hw_block_data_update_set(&dev_ctx, PROPERTY_ENABLE);			// BDU bit set
 	  /* Set Output Data Rate */
 	  lps33hw_data_rate_set(&dev_ctx, LPS33HW_POWER_DOWN);				// one-shot mode enabled
 
-	  /* Read samples in polling mode (no int) */
+
 	  while (1) {
 		HAL_Delay(3000);
 		lps33hw_low_power_set(&dev_ctx, PROPERTY_DISABLE);				// Low-current mode disabled
@@ -124,16 +131,16 @@ int32_t Sensor_Data(void){
 
 
 
-	    if (reg.status.p_da) {
+	    do {
 	    	lps33hw_one_shoot_trigger_set(&dev_ctx, PROPERTY_ENABLE);		// one-shot mode triggered
 			memset(&data_raw_pressure, 0x00, sizeof(int32_t));
 			lps33hw_pressure_raw_get(&dev_ctx, &data_raw_pressure);
 			APP_LOG(TS_OFF, VLEVEL_M, "raw pressure:%x\r\n", data_raw_pressure);
 			pressure_hPa = lps33hw_from_lsb_to_hpa(data_raw_pressure);
-			APP_LOG(TS_OFF, VLEVEL_M, "pressure [hPa]:%x\r\n", pressure_hPa);
+//			APP_LOG(TS_OFF, VLEVEL_M, "pressure [hPa]:%x\r\n", pressure_hPa);
 //	      APP_LOG(TS_OFF, VLEVEL_M, "pressure [hPa]:%6.2f\r\n", pressure_hPa);
 //	      tx_com( tx_buffer, strlen( (char const *)tx_buffer ) );
-	    }
+	    } while(0);
 
 
 
@@ -167,7 +174,7 @@ int32_t Sensor_Data(void){
 
 	    }
 	  }
-	}
+
 
 
 
@@ -329,7 +336,7 @@ int32_t platform_write(void *handle, uint8_t Reg, const uint8_t *Bufp, uint16_t 
 	ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, buffer, (len+1), 1000);
 
 	if (ret){
-		  APP_LOG(TS_OFF, VLEVEL_M, "Er ging iets mis!");
+		  APP_LOG(TS_OFF, VLEVEL_M, "Er ging iets mis (write)!\n");
 	}
 	return ret;
 }
@@ -349,7 +356,7 @@ int32_t platform_read(void *handle, uint8_t Reg, uint8_t *Bufp, uint16_t len){
 		ret=HAL_I2C_Master_Receive(&hi2c2, addr_read, Bufp, len, 1000);
 	}
 	else if(ret){
-	  APP_LOG(TS_OFF, VLEVEL_M, "Kan geen verbinding maken met de sensor!\n");
+	  APP_LOG(TS_OFF, VLEVEL_M, "Kan geen verbinding maken met de sensor (read)!\n");
 	}
 
 

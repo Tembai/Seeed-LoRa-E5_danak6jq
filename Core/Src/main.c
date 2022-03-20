@@ -108,8 +108,8 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-	  Sensor_Data();
-//	  Sensor_Init();
+//	  Sensor_Data();
+	  Sensor_Init();
 //	  I2C_id();
 
 
