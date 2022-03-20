@@ -39,6 +39,7 @@ int32_t platform_write(void *handle, uint8_t Reg, const uint8_t *Bufp, uint16_t 
 int32_t platform_read(void *handle, uint8_t Reg, uint8_t *Bufp, uint16_t len);
 //static void platform_init(void);
 void I2C_software_reset(void);
+HAL_StatusTypeDef ret;
 
 
 

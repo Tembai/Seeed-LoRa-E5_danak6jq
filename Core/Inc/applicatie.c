@@ -57,17 +57,9 @@ void Sensor_Init(void){
 	  I2C_scan();
 	  HAL_Delay(5000);
 	  }
-//	  platform_read();
- */
-//==========================================================================================
-//		lps33hw_ctx_t dev_ctx; /** xxxxxxx is the used part number **/
-//		dev_ctx.write_reg = platform_write;
-//		dev_ctx.read_reg = platform_read;
+	  */
 
-		  uint8_t reg[3];
-		  int32_t ret;
 
-		  ret =  lps33hw_read_reg(ctx, LPS33HW_PRESS_OUT_XL, reg, 3);
 
 	return;
 }
@@ -75,6 +67,7 @@ void Sensor_Init(void){
 
 int32_t Sensor_Data(void){
 
+	Sensor_Init();
 
 	APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Data--------------------------\r\n");
 
@@ -87,10 +80,9 @@ int32_t Sensor_Data(void){
     /* Wait sensor boot time */
 
 //    platform_delay(BOOT_TIME);
-	HAL_Delay(2000);
+	HAL_Delay(500);
 
 
-	//	APP_LOG(TS_OFF, VLEVEL_M, "\r\n");
 
 	stmdev_ctx_t dev_ctx;
 
@@ -98,23 +90,37 @@ int32_t Sensor_Data(void){
     dev_ctx.write_reg = platform_write;
     dev_ctx.read_reg = platform_read;
     dev_ctx.handle = &hi2c2;
-//
+
+	uint8_t reg[3];
+	reg[0]=0x1;
+	reg[1]=0x1;
+	reg[2]=0x1;
+	int32_t ret;
+
+//	ret =  lps33hw_read_reg(&dev_ctx, LPS33HW_PRESS_OUT_XL, reg, 3);
+
+
+
 //    /* Initialize platform specific hardware */
 //    platform_init();
 
 //    APP_LOG(TS_OFF, VLEVEL_M, "Who Am I:%x\r\n",whoamI);
 
-
+/*
 	lps33hw_reset_set(&dev_ctx, PROPERTY_ENABLE);
 	do {
 	lps33hw_reset_get(&dev_ctx, &rst);									// software reset
 	} while (rst);
+*/
 
-	    HAL_Delay(50);
-	    /* Check device ID */
-	    whoamI = 0;
-	    lps33hw_device_id_get(&dev_ctx, &whoamI);
-		APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Data -> WhoAmI: %x\r\n",whoamI);
+
+
+
+	HAL_Delay(50);
+	/* Check device ID */
+	whoamI = 0;
+	lps33hw_device_id_get(&dev_ctx, &whoamI);
+	APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Data -> WhoAmI: %x\r\n",whoamI);
 
 
 	/* Enable Block Data Update */
@@ -124,15 +130,21 @@ int32_t Sensor_Data(void){
 
 
 	  while (1) {
-		HAL_Delay(3000);
-		lps33hw_low_power_set(&dev_ctx, PROPERTY_DISABLE);				// Low-current mode disabled
+
+//		HAL_Delay(3000);
+
+//		lps33hw_low_power_set(&dev_ctx, PROPERTY_DISABLE);				// Low-current mode disabled
 
 
 
 
 
 	    do {
-	    	lps33hw_one_shoot_trigger_set(&dev_ctx, PROPERTY_ENABLE);		// one-shot mode triggered
+//	    	lps33hw_one_shoot_trigger_set(&dev_ctx, PROPERTY_ENABLE);		// one-shot mode triggered
+
+	    	ret =  platform_read(&hi2c2, LPS33HW_PRESS_OUT_XL, reg, 3);
+
+
 			memset(&data_raw_pressure, 0x00, sizeof(int32_t));
 			lps33hw_pressure_raw_get(&dev_ctx, &data_raw_pressure);
 			APP_LOG(TS_OFF, VLEVEL_M, "raw pressure:%x\r\n", data_raw_pressure);

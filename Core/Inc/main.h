@@ -32,6 +32,8 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+HAL_StatusTypeDef ret;
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

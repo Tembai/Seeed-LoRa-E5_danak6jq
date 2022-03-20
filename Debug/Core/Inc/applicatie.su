@@ -1,0 +1,8 @@
+applicatie.c:41:7:Sensor_read	16	static
+applicatie.c:50:6:Sensor_Init	8	static
+applicatie.c:68:9:Sensor_Data	40	static
+applicatie.c:201:6:I2C_scan	96	static
+applicatie.c:229:6:I2C_software_reset	16	static
+applicatie.c:239:6:I2C_id	24	static
+applicatie.c:318:9:platform_write	56	dynamic
+applicatie.c:358:9:platform_read	40	static

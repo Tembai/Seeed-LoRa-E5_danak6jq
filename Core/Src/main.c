@@ -109,7 +109,34 @@ int main(void)
     /* USER CODE BEGIN 3 */
 
 //	  Sensor_Data();
-	  Sensor_Init();
+
+	  HAL_Delay(2000);
+	uint8_t reg[2], var[1];
+	reg[0]=0x28;
+	static const uint8_t addr_write = 0x5D << 1;
+	static const uint8_t addr_read = (0x5D << 1)+1;	// address LPS33HW with read bit
+
+	ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, reg, 1, 1000);				// data lezen
+	if(!ret){
+		ret=HAL_I2C_Master_Receive(&hi2c2, addr_read, reg, 1, 1000);
+	}
+
+	reg[0]=0x11;
+	reg[1]=0x9;
+
+	ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, reg, 2, 1000);				// one shot
+
+	reg[0]=0x28;
+	ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, reg, 1, 1000);				// data lezen
+	if(!ret){
+		ret=HAL_I2C_Master_Receive(&hi2c2, addr_read, reg, 1, 1000);
+	}
+	reg[0]=0x0f;
+	platform_read(&hi2c2, reg, reg, 1);
+
+	APP_LOG(TS_OFF, VLEVEL_M, "reg 2 waarde: %x\n",reg[0]);
+
+//	  Sensor_Init();
 //	  I2C_id();
 
 
