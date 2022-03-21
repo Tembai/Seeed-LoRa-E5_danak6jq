@@ -116,13 +116,13 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-//    MX_LoRaWAN_Process();
+    MX_LoRaWAN_Process();
 
     /* USER CODE BEGIN 3 */
 
 //	  Sensor_Data();
 
-	  HAL_Delay(2000);
+//	  HAL_Delay(2000);
 
 
 //	reg[0]=0x28;
@@ -131,10 +131,10 @@ int main(void)
 //
 //	APP_LOG(TS_OFF, VLEVEL_M, "reg 2 waarde vóór oneshot (functie): %x\n",reg[0]);
 
-	reg[0]=0x1C;
-	ret=HAL_I2C_Master_Transmit(&hi2c2, (uint8_t)(0x76<<1), reg, 1, 1000);				// data lezen
-	if(!ret){
-		ret=HAL_I2C_Master_Receive(&hi2c2, (uint8_t)((0x76<<1)+1), reg, 1, 1000);
+//	reg[0]=0x0F;
+//	ret=HAL_I2C_Master_Transmit(&hi2c2, (uint8_t)(0x76<<1), reg, 1, 1000);				// data lezen
+//	if(!ret){
+//		ret=HAL_I2C_Master_Receive(&hi2c2, (uint8_t)((0x76<<1)+1), reg, 1, 1000);
 	}
 //	APP_LOG(TS_OFF, VLEVEL_M, "reg 2 waarde vóór oneshot (direct): %x\n",reg[0]);
 
@@ -168,7 +168,7 @@ int main(void)
 
 
 
-  }
+
   /* USER CODE END 3 */
 }
 
