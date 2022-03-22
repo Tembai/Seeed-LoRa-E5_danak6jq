@@ -1,4 +1,5 @@
 "./Core/Inc/applicatie.o"
+"./Core/Inc/lps22hh_reg.o"
 "./Core/Inc/lps33hw_reg.o"
 "./Core/Src/adc.o"
 "./Core/Src/adc_if.o"

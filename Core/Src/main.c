@@ -101,6 +101,20 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
+
+//	uint8_t reg[2], var[1];
+//	static const uint8_t addr_write = 0x5D << 1;
+//	static const uint8_t addr_read = (0x5D << 1)+1;	// address LPS33HW with read bit
+
+
+//	ret=platform_read(&hi2c2, 0x0f, reg, 1);
+//	ret=platform_write(&hi2c2, 0x11, 0x4, 1);
+//	HAL_Delay(100);
+//	ret=platform_read(&hi2c2, 0x11, reg, 1);
+
+  uint8_t reg[2];
+
   while (1)
   {
     /* USER CODE END WHILE */
@@ -109,13 +123,53 @@ int main(void)
     /* USER CODE BEGIN 3 */
 
 	  Sensor_Data();
+
+	  HAL_Delay(2000);
+
+//	reg[0]=0x0f;
+//
+//	ret=platform_read(&hi2c2, reg[0], reg, 0);
+//
+//	APP_LOG(TS_OFF, VLEVEL_M, "reg 2 waarde vóór oneshot (functie): %x\n",reg[0]);
+
+//	reg[0]=0x0F;
+//	ret=HAL_I2C_Master_Transmit(&hi2c2, (uint8_t)(0x76<<1), reg, 1, 1000);				// data lezen
+//	if(!ret){
+//		ret=HAL_I2C_Master_Receive(&hi2c2, (uint8_t)((0x76<<1)+1), reg, 1, 1000);
+	}
+//	APP_LOG(TS_OFF, VLEVEL_M, "reg 2 waarde vóór oneshot (direct): %x\n",reg[0]);
+
+
+	  /*
+
+	reg[0]=0x11;
+	reg[1]=0x11;
+	ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, reg, 2, 1000);				// one shot
+
+
+//	reg[0]=0x28;
+	ret=platform_read(&hi2c2, 0x28, reg, 1);
+
+	APP_LOG(TS_OFF, VLEVEL_M, "  reg 2 waarde na oneshot (functie): %x\n",reg[0]);
+
+	HAL_Delay(50);
+	reg[0]=0x28;
+	ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, reg, 1, 1000);				// data lezen
+	if(!ret){
+		ret=HAL_I2C_Master_Receive(&hi2c2, addr_read, reg, 1, 1000);
+	}
+	APP_LOG(TS_OFF, VLEVEL_M, "  reg 2 waarde ná oneshot (direct): %x\n",reg[0]);
+*/
+
+
+
 //	  Sensor_Init();
 //	  I2C_id();
 
 
 
 
-  }
+
   /* USER CODE END 3 */
 }
 
