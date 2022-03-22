@@ -80,7 +80,7 @@ int32_t Sensor_Data(void){
     /* Wait sensor boot time */
 
 //    platform_delay(BOOT_TIME);
-	HAL_Delay(500);
+	HAL_Delay(50);
 
 
 
@@ -103,15 +103,19 @@ int32_t Sensor_Data(void){
 
 //    /* Initialize platform specific hardware */
 //    platform_init();
-
+//	uint8_t whoamI;
+//
 //    APP_LOG(TS_OFF, VLEVEL_M, "Who Am I:%x\r\n",whoamI);
 
-/*
+
+	I2C_id();
+
+
 	lps33hw_reset_set(&dev_ctx, PROPERTY_ENABLE);
 	do {
 	lps33hw_reset_get(&dev_ctx, &rst);									// software reset
 	} while (rst);
-*/
+
 
 
 
@@ -131,7 +135,7 @@ int32_t Sensor_Data(void){
 
 	  while (1) {
 
-//		HAL_Delay(3000);
+		HAL_Delay(1000);
 
 //		lps33hw_low_power_set(&dev_ctx, PROPERTY_DISABLE);				// Low-current mode disabled
 
@@ -140,7 +144,7 @@ int32_t Sensor_Data(void){
 
 
 	    do {
-//	    	lps33hw_one_shoot_trigger_set(&dev_ctx, PROPERTY_ENABLE);		// one-shot mode triggered
+	    	lps33hw_one_shoot_trigger_set(&dev_ctx, PROPERTY_ENABLE);		// one-shot mode triggered
 
 	    	ret =  platform_read(&hi2c2, LPS33HW_PRESS_OUT_XL, reg, 3);
 
@@ -239,7 +243,6 @@ void I2C_software_reset(void){
 void I2C_id(void){
 
   	static const uint8_t WhoAmI = 0x0F;				// register
-  	static const uint8_t CTRL_REG2 = 0x11;				// register
     HAL_StatusTypeDef ret;
     ret=8;
     uint8_t var[1];

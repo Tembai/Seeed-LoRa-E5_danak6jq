@@ -103,31 +103,32 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 
 
-	uint8_t reg[2], var[1];
-	static const uint8_t addr_write = 0x5D << 1;
-	static const uint8_t addr_read = (0x5D << 1)+1;	// address LPS33HW with read bit
+//	uint8_t reg[2], var[1];
+//	static const uint8_t addr_write = 0x5D << 1;
+//	static const uint8_t addr_read = (0x5D << 1)+1;	// address LPS33HW with read bit
 
 
-//	ret=platform_read(&hi2c2, 0x11, reg, 1);
+//	ret=platform_read(&hi2c2, 0x0f, reg, 1);
 //	ret=platform_write(&hi2c2, 0x11, 0x4, 1);
 //	HAL_Delay(100);
 //	ret=platform_read(&hi2c2, 0x11, reg, 1);
 
+  uint8_t reg[2];
+
   while (1)
   {
     /* USER CODE END WHILE */
-    MX_LoRaWAN_Process();
+//    MX_LoRaWAN_Process();
 
     /* USER CODE BEGIN 3 */
 
-//	  Sensor_Data();
+	  Sensor_Data();
 
-//	  HAL_Delay(2000);
+	  HAL_Delay(2000);
 
-
-//	reg[0]=0x28;
+//	reg[0]=0x0f;
 //
-//	ret=platform_read(&hi2c2, reg[0], reg, 1);
+//	ret=platform_read(&hi2c2, reg[0], reg, 0);
 //
 //	APP_LOG(TS_OFF, VLEVEL_M, "reg 2 waarde vóór oneshot (functie): %x\n",reg[0]);
 
