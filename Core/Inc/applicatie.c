@@ -56,7 +56,7 @@ void Sensor_Init(void){
 }
 
 
-void Sensor_Data(void){
+uint16_t Sensor_Data(void){
 
 
 	APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Data--------------------------\r\n");
@@ -142,7 +142,7 @@ void Sensor_Data(void){
 //			APP_LOG(TS_OFF, VLEVEL_M, "raw als decimaal:%d\r\n", data_raw_pressure);
 			pressure_hPa = lps22hh_from_lsb_to_hpa(data_raw_pressure);
 //			APP_LOG(TS_OFF, VLEVEL_M, "pressure [hPa]:%d\r\n", pressure_hPa);
-	      APP_LOG(TS_OFF, VLEVEL_M, "pressure [hPa]:%f\r\n", (float)(pressure_hPa));
+//	      APP_LOG(TS_OFF, VLEVEL_M, "pressure [hPa]:%f\r\n", (float)(pressure_hPa));			// dit werkt dus niet ???
 	    } while(0);
 
 
@@ -175,7 +175,7 @@ void Sensor_Data(void){
 
 
 
-	  return;
+	  return pressure_hPa;
 	  }
 
 

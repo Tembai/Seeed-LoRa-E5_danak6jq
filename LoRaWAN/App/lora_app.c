@@ -259,7 +259,7 @@ void LoRaWAN_Init(void)
 
 
   UTIL_SEQ_RegTask((1 << CFG_SEQ_Task_ApplicatieInit), UTIL_SEQ_RFU, Sensor_Init);
-  UTIL_SEQ_RegTask((1 << CFG_SEQ_Task_ApplicatieData), UTIL_SEQ_RFU, Sensor_Data);
+//  UTIL_SEQ_RegTask((1 << CFG_SEQ_Task_ApplicatieData), UTIL_SEQ_RFU, Sensor_Data);
   UTIL_SEQ_SetTask((1 << CFG_SEQ_Task_ApplicatieInit), CFG_SEQ_Prio_0);
 
 
@@ -429,6 +429,7 @@ static void SendTxData(void)
   EnvSensors_Read(&sensor_data);
   temperature = (SYS_GetTemperatureLevel() >> 8);
   pressure    = (uint16_t)(sensor_data.pressure * 100 / 10);      /* in hPa / 10 */
+//  pressure = (uint16_t) Sensor_Data();
 
   AppData.Port = LORAWAN_USER_APP_PORT;
 

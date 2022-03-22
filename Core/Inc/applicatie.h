@@ -21,7 +21,7 @@
 //======================================================================================================
 float Sensor_read();
 void Sensor_Init(void);
-void Sensor_Data(void);
+uint16_t Sensor_Data(void);
 void one_shot_trigger(void);
 
 void I2C_scan(void);
