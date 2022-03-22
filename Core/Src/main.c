@@ -29,8 +29,7 @@
 #include "stdint.h"
 #include "stdlib.h"
 
-
-//#include "..\..\STM32CubeIDE\Application\User\Core/sensor_app.h"
+#include "..\Inc/applicatie.h"
 
 /* USER CODE END Includes */
 
@@ -113,7 +112,8 @@ int main(void)
 //	HAL_Delay(100);
 //	ret=platform_read(&hi2c2, 0x11, reg, 1);
 
-  uint8_t reg[2];
+
+
 
   while (1)
   {

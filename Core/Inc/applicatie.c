@@ -49,16 +49,8 @@ float Sensor_read(){
 void Sensor_Init(void){
 
 
-	  APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Init------------------------\r\n")
-
-		/*
-	  while(1){
-	  I2C_scan();
-	  HAL_Delay(5000);
-	  }
-	  */
-
-
+		APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Init------------------------\r\n")
+		I2C_id();
 
 	return;
 }
@@ -66,10 +58,18 @@ void Sensor_Init(void){
 
 void Sensor_Data(void){
 
-	Sensor_Init();
 
 	APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Data--------------------------\r\n");
 
+	stmdev_ctx_t dev_ctx;
+
+	/* Initialize mems driver interface */
+	dev_ctx.write_reg = platform_write;
+	dev_ctx.read_reg = platform_read;
+	dev_ctx.handle = &hi2c2;
+
+
+	Sensor_Init();
 
 
     /* Initialize platform specific hardware */
@@ -80,15 +80,6 @@ void Sensor_Data(void){
 
 //    platform_delay(BOOT_TIME);
 	HAL_Delay(50);
-
-
-
-	stmdev_ctx_t dev_ctx;
-
-    /* Initialize mems driver interface */
-    dev_ctx.write_reg = platform_write;
-    dev_ctx.read_reg = platform_read;
-    dev_ctx.handle = &hi2c2;
 
 	uint8_t reg[3];
 	reg[0]=0x1;
@@ -107,34 +98,29 @@ void Sensor_Data(void){
 //    APP_LOG(TS_OFF, VLEVEL_M, "Who Am I:%x\r\n",whoamI);
 
 
-	I2C_id();
+		I2C_id();
 
 
-	lps22hh_reset_set(&dev_ctx, PROPERTY_ENABLE);
-	do {
-	lps22hh_reset_get(&dev_ctx, &rst);									// software reset
-	} while (rst);
+		lps22hh_reset_set(&dev_ctx, PROPERTY_ENABLE);
+		do {
+		lps22hh_reset_get(&dev_ctx, &rst);									// software reset
+		} while (rst);
 
 
 
 
 
-	HAL_Delay(50);
-	/* Check device ID */
-	whoamI = 0;
-	lps22hh_device_id_get(&dev_ctx, &whoamI);
-	APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Data -> WhoAmI: %x\r\n",whoamI);
+		HAL_Delay(50);
+		/* Check device ID */
+		whoamI = 0;
+		lps22hh_device_id_get(&dev_ctx, &whoamI);
+		APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Data -> WhoAmI: %x\r\n",whoamI);
 
 
-	/* Enable Block Data Update */
-	  lps22hh_block_data_update_set(&dev_ctx, PROPERTY_ENABLE);			// BDU bit set
-	  /* Set Output Data Rate */
-	  lps22hh_data_rate_set(&dev_ctx, LPS22HH_POWER_DOWN);				// one-shot mode enabled
-
-
-	  while (1) {
-
-
+		/* Enable Block Data Update */
+		  lps22hh_block_data_update_set(&dev_ctx, PROPERTY_ENABLE);			// BDU bit set
+		  /* Set Output Data Rate */
+		  lps22hh_data_rate_set(&dev_ctx, LPS22HH_POWER_DOWN);				// one-shot mode enabled
 //		lps22hh_low_power_set(&dev_ctx, PROPERTY_DISABLE);				// Low-current mode disabled
 
 
@@ -188,7 +174,7 @@ void Sensor_Data(void){
 
 
 
-	    }
+
 	  return;
 	  }
 
