@@ -428,8 +428,8 @@ static void SendTxData(void)
 
   EnvSensors_Read(&sensor_data);
   temperature = (SYS_GetTemperatureLevel() >> 8);
-  pressure    = (uint16_t)(sensor_data.pressure * 100 / 10);      /* in hPa / 10 */
-//  pressure = (uint16_t) Sensor_Data();
+//  pressure    = (uint16_t)(sensor_data.pressure * 100 / 10);      /* in hPa / 10 */
+  pressure = (uint16_t) Sensor_Data();
 
   AppData.Port = LORAWAN_USER_APP_PORT;
 
