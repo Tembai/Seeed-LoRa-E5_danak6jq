@@ -95,7 +95,7 @@ extern "C" {
 /*!
  * end-device IEEE EUI (big endian)
  */
-#define LORAWAN_DEVICE_EUI                                 { 0x70, 0xB3, 0xD5, 0x7E, 0xD0, 0x04, 0xDE, 0x42 }
+#define LORAWAN_DEVICE_EUI                                 { 0x70, 0xB3, 0xD5, 0x7E, 0xD0, 0x04, 0xAB, 0x31 }
 
 /*!
  * App/Join server IEEE EUI (big endian)
@@ -117,7 +117,7 @@ extern "C" {
 /*!
  * Application root key
  */
-#define LORAWAN_APP_KEY                                    D5,5C,6D,E2,27,27,60,8E,BF,CE,69,93,90,CE,42,84
+#define LORAWAN_APP_KEY                                    BD,2E,16,C8,B9,CE,48,AE,A7,4D,E1,C1,E4,3F,08,4E
 
 /*!
  * Network root key
@@ -127,12 +127,12 @@ extern "C" {
 /*!
  * Forwarding Network session key
  */
-#define LORAWAN_NWK_S_KEY                                  EC,27,DD,6B,E9,BD,A7,9E,FE,78,D2,49,B1,F1,C4,E9
+#define LORAWAN_NWK_S_KEY                                  6F,C0,25,2B,53,5F,13,97,C2,DE,32,53,36,D2,DD,A2
 
 /*!
  * Application session key
  */
-#define LORAWAN_APP_S_KEY                                  52,FB,12,6E,DF,8D,1B,0D,BD,78,B6,22,C0,02,F0,CD
+#define LORAWAN_APP_S_KEY                                  83,B7,3C,88,D0,06,A8,CA,36,AB,62,44,71,5E,34,37
 
 /*!
  * Format commissioning keys
