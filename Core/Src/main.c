@@ -117,9 +117,10 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    MX_LoRaWAN_Process();
+//    MX_LoRaWAN_Process();
 
     /* USER CODE BEGIN 3 */
+	  I2C_id();
 
 //	  Sensor_Data();
 
@@ -163,7 +164,6 @@ int main(void)
 
 
 //	  Sensor_Init();
-//	  I2C_id();
 
 
 
