@@ -69,7 +69,7 @@ uint16_t Sensor_Data(void){
 	dev_ctx.handle = &hi2c2;
 
 
-	Sensor_Init();
+//	Sensor_Init();
 
 
     /* Initialize platform specific hardware */
@@ -79,7 +79,7 @@ uint16_t Sensor_Data(void){
     /* Wait sensor boot time */
 
 //    platform_delay(BOOT_TIME);
-	HAL_Delay(50);
+//	HAL_Delay(50);
 
 	uint8_t reg[3];
 	reg[0]=0x1;
@@ -100,21 +100,22 @@ uint16_t Sensor_Data(void){
 
 		I2C_id();
 
-
+		//============================================================================================ 	misschien proberen dit niet iedere cycle te doen?
 		lps22hh_reset_set(&dev_ctx, PROPERTY_ENABLE);
 		do {
 		lps22hh_reset_get(&dev_ctx, &rst);									// software reset
 		} while (rst);
+		//============================================================================================
 
 
 
 
 
-		HAL_Delay(50);
+		HAL_Delay(100);
 		/* Check device ID */
 		whoamI = 0;
 		lps22hh_device_id_get(&dev_ctx, &whoamI);
-		APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Data -> WhoAmI: %x\r\n",whoamI);
+		APP_LOG(TS_OFF, VLEVEL_M, "Ingebouwde functie -> WhoAmI: %x\r\n",whoamI);
 
 
 		/* Enable Block Data Update */
