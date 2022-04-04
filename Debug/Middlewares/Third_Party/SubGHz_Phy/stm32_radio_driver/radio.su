@@ -1,5 +1,3 @@
-stm32wlxx_ll_gpio.h:937:22:LL_GPIO_SetOutputPin	16	static
-stm32wlxx_ll_gpio.h:966:22:LL_GPIO_ResetOutputPin	16	static
 radio.c:640:13:RadioInit	24	static
 radio.c:670:21:RadioGetStatus	8	static
 radio.c:685:13:RadioSetModem	16	static
