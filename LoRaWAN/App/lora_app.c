@@ -443,15 +443,15 @@ static void SendTxData(void)
 #ifdef CAYENNE_LPP
   CayenneLppReset();
   CayenneLppAddBarometricPressure(channel++, pressure);
-  CayenneLppAddBarometricPressure(channel++, pressure_dec);
   CayenneLppAddTemperature(channel++, temperature);
-//  CayenneLppAddRelativeHumidity(channel++, (uint16_t)(sensor_data.humidity));
+  CayenneLppAddRelativeHumidity(channel++, (uint16_t)(sensor_data.humidity));
 
   if ((LmHandlerParams.ActiveRegion != LORAMAC_REGION_US915) && (LmHandlerParams.ActiveRegion != LORAMAC_REGION_AU915)
       && (LmHandlerParams.ActiveRegion != LORAMAC_REGION_AS923))
   {
     CayenneLppAddDigitalInput(channel++, GetBatteryLevel());
-//    CayenneLppAddDigitalOutput(channel++, AppLedStateOn);
+    CayenneLppAddBarometricPressure(channel++, pressure_dec);
+    CayenneLppAddDigitalOutput(channel++, AppLedStateOn);
   }
 
   CayenneLppCopy(AppData.Buffer);
