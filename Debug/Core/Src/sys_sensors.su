@@ -1,2 +1,2 @@
-sys_sensors.c:162:10:EnvSensors_Read	32	static
-sys_sensors.c:201:10:EnvSensors_Init	4	static
+sys_sensors.c:168:10:EnvSensors_Read	32	static
+sys_sensors.c:216:10:EnvSensors_Init	4	static

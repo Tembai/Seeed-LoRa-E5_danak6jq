@@ -51,14 +51,13 @@ void Sensor_Init(void){
 
 		APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Init------------------------\r\n")
 		I2C_id();						//both of these work
-		HAL_Delay(5000);
-		I2C_id();
 
 	return;
 }
 
 
-uint16_t Sensor_Data(void){
+//uint16_t Sensor_Data(void){
+float Sensor_Data(void){
 
 
 	APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Data--------------------------\r\n");
@@ -158,7 +157,13 @@ uint16_t Sensor_Data(void){
 //	      APP_LOG(TS_OFF, VLEVEL_M, "pressure [hPa]:%f\r\n", (float)(pressure_hPa));			// dit werkt dus niet ???
 	    } while(0);
 
-
+//	    uint16_t p_16;
+		APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Data -> (float)pressure_hPa: %4.4f\r\n",pressure_hPa);
+//		APP_LOG(TS_OFF, VLEVEL_M, pressure_hPa);
+//		p_16= (uint16_t)(pressure_hPa * 100 / 10);      /* in hPa / 10 */
+//		APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Data -> (uint16_t)pressure_hPa: %f\r\n");
+//		APP_LOG(TS_OFF, VLEVEL_M, p_16);
+		HAL_Delay(2500);
 
 
 /*

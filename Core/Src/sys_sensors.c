@@ -24,6 +24,12 @@
 #include "sys_sensors.h"
 
 /* USER CODE BEGIN Includes */
+
+#include "sys_app.h"
+#include "applicatie.h"
+
+
+
 #if defined (SENSOR_ENABLED) && (SENSOR_ENABLED == 1)
 #if defined (X_NUCLEO_IKS01A2)
 #warning "IKS drivers are today available for several families but not stm32WL"
@@ -186,6 +192,15 @@ int32_t  EnvSensors_Read(sensor_t *sensor_data)
 #elif !defined (SENSOR_ENABLED)
 #error SENSOR_ENABLED not defined
 #endif  /* SENSOR_ENABLED */
+
+  //===============================================================================================================================================
+  PRESSURE_Value = (float)Sensor_Data();
+
+//  sensor_data->pressure = Sensor_Data();
+//  APP_LOG(TS_OFF, VLEVEL_M, "sys_sensors.c->sensor_data.pressure:\r\n");
+//  APP_LOG(TS_OFF, VLEVEL_M, sensor_data->pressure);
+  //===============================================================================================================================================
+
 
   sensor_data->humidity    = HUMIDITY_Value;
   sensor_data->temperature = TEMPERATURE_Value;

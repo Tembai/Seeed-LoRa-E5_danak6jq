@@ -271,8 +271,8 @@ void LoRaWAN_Init(void)
   /* USER CODE END LoRaWAN_Init_1 */
 
   UTIL_SEQ_RegTask((1 << CFG_SEQ_Task_LmHandlerProcess), UTIL_SEQ_RFU, LmHandlerProcess);
-  UTIL_SEQ_RegTask((1 << CFG_SEQ_Task_LoRaSendOnTxTimerOrButtonEvent), UTIL_SEQ_RFU, SendTxData); 	//=============================================================================================================
-  /* Init Info table used by LmHandler*/															// laten we eens proberen deze te onderscheppen
+  UTIL_SEQ_RegTask((1 << CFG_SEQ_Task_LoRaSendOnTxTimerOrButtonEvent), UTIL_SEQ_RFU, SendTxData);
+  /* Init Info table used by LmHandler*/
   LoraInfo_Init();
 
   /* Init the Lora Stack*/
@@ -290,8 +290,7 @@ void LoRaWAN_Init(void)
   if (EventType == TX_ON_TIMER)
   {
     /* send every time timer elapses */
-    UTIL_TIMER_Create(&TxTimer,  0xFFFFFFFFU, UTIL_TIMER_ONESHOT, OnTxTimerEvent, NULL);			// dit is de timer, misschien een dubbele opdr geven in de IRQ?
-//    UTIL_TIMER_Create(&TxTimer,  0xFFFFFFFFU, UTIL_TIMER_ONESHOT, TussenIn, NULL);			// dit is de timer, misschien een dubbele opdr geven in de IRQ?
+    UTIL_TIMER_Create(&TxTimer,  0xFFFFFFFFU, UTIL_TIMER_ONESHOT, OnTxTimerEvent, NULL);
     UTIL_TIMER_SetPeriod(&TxTimer,  APP_TX_DUTYCYCLE);
     UTIL_TIMER_Start(&TxTimer);
   }
@@ -413,6 +412,7 @@ static void SendTxData(void)
 {
   /* USER CODE BEGIN SendTxData_1 */
   uint16_t pressure = 0;
+  uint16_t pressure_dec = 0;
   int16_t temperature = 0;
   sensor_t sensor_data;
   UTIL_TIMER_Time_t nextTxIn = 0;
@@ -428,12 +428,14 @@ static void SendTxData(void)
 #endif /* CAYENNE_LPP */
 
 //=============================================================================================
-  UTIL_SEQ_SetTask((1 << CFG_SEQ_Task_ApplicatieInit), CFG_SEQ_Prio_0);
+//  UTIL_SEQ_SetTask((1 << CFG_SEQ_Task_ApplicatieInit), CFG_SEQ_Prio_0);
 //=============================================================================================
 
   EnvSensors_Read(&sensor_data);
   temperature = (SYS_GetTemperatureLevel() >> 8);
-  pressure    = (uint16_t)(sensor_data.pressure * 100 / 10);      /* in hPa / 10 */
+//  pressure    = (uint16_t)(sensor_data.pressure * 100 / 10);      /* in hPa / 10 */
+  pressure    = (uint16_t)(sensor_data.pressure);      /* in hPa / 10 */
+  pressure_dec    = (uint16_t)(sensor_data.pressure * 1000);      /* in hPa / 10 */
 //  pressure = (uint16_t) Sensor_Data();
 
   AppData.Port = LORAWAN_USER_APP_PORT;
@@ -441,14 +443,15 @@ static void SendTxData(void)
 #ifdef CAYENNE_LPP
   CayenneLppReset();
   CayenneLppAddBarometricPressure(channel++, pressure);
+  CayenneLppAddBarometricPressure(channel++, pressure_dec);
   CayenneLppAddTemperature(channel++, temperature);
-  CayenneLppAddRelativeHumidity(channel++, (uint16_t)(sensor_data.humidity));
+//  CayenneLppAddRelativeHumidity(channel++, (uint16_t)(sensor_data.humidity));
 
   if ((LmHandlerParams.ActiveRegion != LORAMAC_REGION_US915) && (LmHandlerParams.ActiveRegion != LORAMAC_REGION_AU915)
       && (LmHandlerParams.ActiveRegion != LORAMAC_REGION_AS923))
   {
     CayenneLppAddDigitalInput(channel++, GetBatteryLevel());
-    CayenneLppAddDigitalOutput(channel++, AppLedStateOn);
+//    CayenneLppAddDigitalOutput(channel++, AppLedStateOn);
   }
 
   CayenneLppCopy(AppData.Buffer);
@@ -502,26 +505,13 @@ static void SendTxData(void)
   /* USER CODE END SendTxData_1 */
 }
 
-/*
-static void TussenIn(void *context)
-{
-
-
-	I2C_id();
-
-  UTIL_SEQ_SetTask((1 << CFG_SEQ_Task_LoRaSendOnTxTimerOrButtonEvent), CFG_SEQ_Prio_0);
-  UTIL_TIMER_Start(&TxTimer);
-
-}
- */
-
 static void OnTxTimerEvent(void *context)
 {
   /* USER CODE BEGIN OnTxTimerEvent_1 */
 
-	I2C_id();
+//	I2C_id();
 	//=============================================================================================
-	  UTIL_SEQ_SetTask((1 << CFG_SEQ_Task_ApplicatieInit), CFG_SEQ_Prio_0);
+//	  UTIL_SEQ_SetTask((1 << CFG_SEQ_Task_ApplicatieInit), CFG_SEQ_Prio_0);
 	//=============================================================================================
 
 

@@ -31,6 +31,8 @@
 
 #include "..\Inc/applicatie.h"
 
+#include "sys_sensors.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -117,6 +119,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+
     MX_LoRaWAN_Process();
 
     /* USER CODE BEGIN 3 */
@@ -124,7 +127,18 @@ int main(void)
 
 //	  Sensor_Data();
 
-//	  HAL_Delay(2000);
+	  /*
+	  sensor_t sensor_data;
+	  uint16_t pressure = 0;
+
+
+	  EnvSensors_Read(&sensor_data);
+	  pressure    = (uint16_t)(sensor_data.pressure * 100 / 10);
+
+
+
+	  HAL_Delay(2000);
+	  */
 
 //	reg[0]=0x0f;
 //

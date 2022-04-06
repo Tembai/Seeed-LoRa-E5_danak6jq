@@ -46,7 +46,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Utilities/trace/adv_trace/stm32_adv_trace.h \
  ../Core/Inc/utilities_conf.h ../Drivers/CMSIS/Include/cmsis_compiler.h \
  ../Utilities/misc/stm32_mem.h ../Utilities/misc/stm32_tiny_vsnprintf.h \
- ../Core/Src/..\Inc/applicatie.h ../Core/Src/..\Inc/i2c.h
+ ../Core/Src/..\Inc/applicatie.h ../Core/Src/..\Inc/i2c.h \
+ ../Core/Inc/sys_sensors.h
 
 ../Core/Inc/main.h:
 
@@ -157,3 +158,5 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Src/..\Inc/applicatie.h:
 
 ../Core/Src/..\Inc/i2c.h:
+
+../Core/Inc/sys_sensors.h:
