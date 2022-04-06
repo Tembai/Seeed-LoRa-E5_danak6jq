@@ -50,6 +50,8 @@ void Sensor_Init(void){
 
 
 		APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Init------------------------\r\n")
+		I2C_id();						//both of these work
+		HAL_Delay(5000);
 		I2C_id();
 
 	return;
@@ -69,7 +71,7 @@ uint16_t Sensor_Data(void){
 	dev_ctx.handle = &hi2c2;
 
 
-	Sensor_Init();
+//	Sensor_Init();
 
 
     /* Initialize platform specific hardware */
@@ -79,7 +81,7 @@ uint16_t Sensor_Data(void){
     /* Wait sensor boot time */
 
 //    platform_delay(BOOT_TIME);
-	HAL_Delay(50);
+	HAL_Delay(100);
 
 	uint8_t reg[3];
 	reg[0]=0x1;
@@ -97,44 +99,55 @@ uint16_t Sensor_Data(void){
 //
 //    APP_LOG(TS_OFF, VLEVEL_M, "Who Am I:%x\r\n",whoamI);
 
+		HAL_Delay(20);
 
 		I2C_id();
 
 
+		/*
 		lps22hh_reset_set(&dev_ctx, PROPERTY_ENABLE);
 		do {
 		lps22hh_reset_get(&dev_ctx, &rst);									// software reset
 		} while (rst);
+		*/
 
 
 
 
 
-		HAL_Delay(50);
+		HAL_Delay(20);
 		/* Check device ID */
 		whoamI = 0;
 		lps22hh_device_id_get(&dev_ctx, &whoamI);
-		APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Data -> WhoAmI: %x\r\n",whoamI);
+		if (whoamI!=0xB3){													// hardcoded default address LPS22HH
+			APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Data -> WhoAmI gefaald: %x\r\n",whoamI);
+		}
 
+//		APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Data -> WhoAmI: %x\r\n",whoamI);
+
+		HAL_Delay(10);
 
 		/* Enable Block Data Update */
 		  lps22hh_block_data_update_set(&dev_ctx, PROPERTY_ENABLE);			// BDU bit set
 		  /* Set Output Data Rate */
+		  HAL_Delay(10);
 		  lps22hh_data_rate_set(&dev_ctx, LPS22HH_POWER_DOWN);				// one-shot mode enabled
 //		lps22hh_low_power_set(&dev_ctx, PROPERTY_DISABLE);				// Low-current mode disabled
+		  HAL_Delay(10);
 
 
 
 
 
 	    do {
-	    	HAL_Delay(1000);
+//	    	HAL_Delay(1000);
 //	    	lps22hh_one_shoot_trigger_set(&dev_ctx, PROPERTY_ENABLE);		// one-shot mode triggered
 	    	one_shot_trigger();
 
 
 //	    	ret =  platform_read(&hi2c2, LPS22HH_PRESS_OUT_XL, reg, 3);
 
+	    	HAL_Delay(10);
 
 			memset(&data_raw_pressure, 0x00, sizeof(int32_t));
 			lps22hh_pressure_raw_get(&dev_ctx, &data_raw_pressure);
@@ -223,6 +236,11 @@ void software_reset(void){
   	static const uint8_t CTRL_REG2 = 0x11;				// register
     var[0]=0x14;
     ret=platform_write(&hi2c2, CTRL_REG2, var, 1);
+
+    if (ret != HAL_OK){
+        APP_LOG(TS_OFF, VLEVEL_M, "software_reset();        failed\n");
+    }
+
     return;
 }
 
@@ -238,13 +256,16 @@ void one_shot_trigger(void){
     	var[0]=var[0] | (uint8_t) 1;
 		ret=platform_write(&hi2c2, CTRL_REG2, var, 1);
     }
+    else{
+        APP_LOG(TS_OFF, VLEVEL_M, "one_shot_trigger();        failed\n");
+    }
 
 
     return;
 }
 
 
-void I2C_id(void){
+uint8_t I2C_id(void){
 
   	static const uint8_t WhoAmI = 0x0F;				// register
     HAL_StatusTypeDef ret;
@@ -318,7 +339,7 @@ void I2C_id(void){
 ////    APP_LOG(TS_OFF, VLEVEL_M, "lengte van buf:%x\n",z);
 //	APP_LOG(TS_OFF, VLEVEL_M, "id2: %X\n",buf[0]);
 
-	 return;
+	 return var[0];
 }
 
 

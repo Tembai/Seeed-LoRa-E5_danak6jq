@@ -26,7 +26,8 @@ void one_shot_trigger(void);
 
 void I2C_scan(void);
 //static int32_t test_read();
-void I2C_id(void);
+//void I2C_id(void);
+uint8_t I2C_id(void);
 
 static const uint8_t addr_write = 0x5D << 1;
 static const uint8_t addr_read = (0x5D << 1)+1;	// address LPS33HW with read bit
