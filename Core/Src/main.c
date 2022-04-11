@@ -119,7 +119,6 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
     MX_LoRaWAN_Process();
 
     /* USER CODE BEGIN 3 */
