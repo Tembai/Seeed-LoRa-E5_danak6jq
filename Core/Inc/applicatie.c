@@ -159,7 +159,7 @@ float Sensor_Data(void){
 
 //	    uint16_t p_16;
 //		APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Data -> (float)pressure_hPa: %4.4f\r\n",pressure_hPa);
-		  APP_LOG(TS_OFF, VLEVEL_M, "\r\nSensor_Data -> pressure_hPa: %d\r\n",pressure_hPa);
+//		  APP_LOG(TS_OFF, VLEVEL_M, "\r\nSensor_Data -> pressure_hPa: %d\r\n",pressure_hPa);
 //		APP_LOG(TS_OFF, VLEVEL_M, pressure_hPa);
 //		p_16= (uint16_t)(pressure_hPa * 100 / 10);      /* in hPa / 10 */
 //		APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Data -> (uint16_t)pressure_hPa: %f\r\n");
