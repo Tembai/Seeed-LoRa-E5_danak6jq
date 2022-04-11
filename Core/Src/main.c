@@ -93,7 +93,13 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
+
+
+
   MX_LoRaWAN_Init();
+
+
+
   MX_I2C2_Init();
   /* USER CODE BEGIN 2 */
 
@@ -116,71 +122,59 @@ int main(void)
 
 
 
+
+
+/*
+  uint16_t pressure = 0;
+  uint16_t pressure_dec = 0;
+  int16_t temperature = 0;
+  sensor_t sensor_data;
+  */
+
   while (1)
   {
     /* USER CODE END WHILE */
     MX_LoRaWAN_Process();
 
-    /* USER CODE BEGIN 3 */
-//	  I2C_id();
 
-//	  Sensor_Data();
 
-	  /*
-	  sensor_t sensor_data;
-	  uint16_t pressure = 0;
-
+/*
+//	  switch (Type.GetTypeCode(pressure_dec.GetType()))
+//	  {
+//	      case TypeCode.Decimal:
+//	          // Handle Decimal
+//		  APP_LOG(TS_OFF, VLEVEL_M, "\r\ncase decimal\r\n");
+//	          break;
+//
+//	      case TypeCode.Int32:
+//	          // Handle Int32
+//		  APP_LOG(TS_OFF, VLEVEL_M, "\r\ncase int32\r\n");
+//	          break;
+//	      default: APP_LOG(TS_OFF, VLEVEL_M, "\r\ndefault\r\n");
+//	  }
 
 	  EnvSensors_Read(&sensor_data);
+
+	#define N_DECIMAL_POINTS_PRECISION (1000) // n = 3. Three decimal points.
+
+
+
 	  pressure    = (uint16_t)(sensor_data.pressure * 100 / 10);
+	  pressure_dec    = (uint16_t)((int)(sensor_data.pressure * 100000)%100000);
 
+//		int integerPart = (int)sensor_data.pressure;
+//		int decimalPart = ((int)(sensor_data.pressure*N_DECIMAL_POINTS_PRECISION)%N_DECIMAL_POINTS_PRECISION);
 
-
+	  APP_LOG(TS_OFF, VLEVEL_M, "\r\npressure          : %d\r\n",pressure);
+	  APP_LOG(TS_OFF, VLEVEL_M, "\r\npressure decimalen: %d\r\n",pressure_dec);
 	  HAL_Delay(2000);
-	  */
 
-//	reg[0]=0x0f;
-//
-//	ret=platform_read(&hi2c2, reg[0], reg, 0);
-//
-//	APP_LOG(TS_OFF, VLEVEL_M, "reg 2 waarde vóór oneshot (functie): %x\n",reg[0]);
-
-//	reg[0]=0x0F;
-//	ret=HAL_I2C_Master_Transmit(&hi2c2, (uint8_t)(0x76<<1), reg, 1, 1000);				// data lezen
-//	if(!ret){
-//		ret=HAL_I2C_Master_Receive(&hi2c2, (uint8_t)((0x76<<1)+1), reg, 1, 1000);
-	}
-//	APP_LOG(TS_OFF, VLEVEL_M, "reg 2 waarde vóór oneshot (direct): %x\n",reg[0]);
-
-
-	  /*
-
-	reg[0]=0x11;
-	reg[1]=0x11;
-	ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, reg, 2, 1000);				// one shot
-
-
-//	reg[0]=0x28;
-	ret=platform_read(&hi2c2, 0x28, reg, 1);
-
-	APP_LOG(TS_OFF, VLEVEL_M, "  reg 2 waarde na oneshot (functie): %x\n",reg[0]);
-
-	HAL_Delay(50);
-	reg[0]=0x28;
-	ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, reg, 1, 1000);				// data lezen
-	if(!ret){
-		ret=HAL_I2C_Master_Receive(&hi2c2, addr_read, reg, 1, 1000);
-	}
-	APP_LOG(TS_OFF, VLEVEL_M, "  reg 2 waarde ná oneshot (direct): %x\n",reg[0]);
 */
 
 
 
-//	  Sensor_Init();
 
-
-
-
+	}
 
   /* USER CODE END 3 */
 }

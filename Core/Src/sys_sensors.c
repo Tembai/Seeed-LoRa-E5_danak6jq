@@ -130,9 +130,9 @@ static void I2C2_MspDeInit(I2C_HandleTypeDef *i2cHandle)
 #define STSOP_LATTITUDE           ((float) 43.618622 )  /*!< default latitude position */
 #define STSOP_LONGITUDE           ((float) 7.051415  )  /*!< default longitude position */
 #define MAX_GPS_POS               ((int32_t) 8388607 )  /*!< 2^23 - 1 */
-#define HUMIDITY_DEFAULT_VAL      50.0f                 /*!< default humidity */
-#define TEMPERATURE_DEFAULT_VAL   18.0f                 /*!< default temperature */
-#define PRESSURE_DEFAULT_VAL      1000.0f               /*!< default pressure */
+#define HUMIDITY_DEFAULT_VAL      10.0f                 /*!< default humidity */
+#define TEMPERATURE_DEFAULT_VAL   5.0f                 /*!< default temperature */
+#define PRESSURE_DEFAULT_VAL      777.0f               /*!< default pressure */
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/

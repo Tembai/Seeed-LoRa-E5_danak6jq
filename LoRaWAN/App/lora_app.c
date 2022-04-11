@@ -435,7 +435,11 @@ static void SendTxData(void)
   temperature = (SYS_GetTemperatureLevel() >> 8);
 //  pressure    = (uint16_t)(sensor_data.pressure * 100 / 10);      /* in hPa / 10 */
   pressure    = (uint16_t)(sensor_data.pressure);      /* in hPa / 10 */
-  pressure_dec    = (uint16_t)(sensor_data.pressure * 1000);      /* in hPa / 10 */
+  pressure_dec    = (uint16_t)((int)(sensor_data.pressure * 10000)%10000);      /* in hPa / 10 */
+
+  APP_LOG(TS_OFF, VLEVEL_M, "\r\npressure          : %d\r\n",pressure);
+  APP_LOG(TS_OFF, VLEVEL_M, "\r\npressure decimalen: %d\r\n",pressure_dec);
+
 //  pressure = (uint16_t) Sensor_Data();
 
   AppData.Port = LORAWAN_USER_APP_PORT;
