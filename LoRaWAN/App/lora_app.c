@@ -413,6 +413,7 @@ static void SendTxData(void)
   /* USER CODE BEGIN SendTxData_1 */
   uint16_t pressure = 0;
   uint16_t pressure_dec = 0;
+  uint16_t pressure_bruikbaar =0;
   int16_t temperature = 0;
   sensor_t sensor_data;
   UTIL_TIMER_Time_t nextTxIn = 0;
@@ -435,10 +436,13 @@ static void SendTxData(void)
   temperature = (SYS_GetTemperatureLevel() >> 8);
 //  pressure    = (uint16_t)(sensor_data.pressure * 100 / 10);      /* in hPa / 10 */
   pressure    = (uint16_t)(sensor_data.pressure);      /* in hPa / 10 */
-  pressure_dec    = (uint16_t)((int)(sensor_data.pressure * 10000)%10000);      /* in hPa / 10 */
+  pressure_dec    = (uint16_t)((int)(sensor_data.pressure * 10000)%10000); 			/* dit zijn de decimalen van de gemeten waarde */
+  pressure_bruikbaar = (uint16_t)((int)(sensor_data.pressure * 100)%1000);      /* dit is de gemeten waarde, omgevormd tot iets dat in Cayenne LPP bruikbaar afgelezen kan worden. 1008,459hPa = 08,45 */
 
-  APP_LOG(TS_OFF, VLEVEL_M, "\r\npressure          : %d\r\n",pressure);
-  APP_LOG(TS_OFF, VLEVEL_M, "\r\npressure decimalen: %d\r\n",pressure_dec);
+
+  APP_LOG(TS_OFF, VLEVEL_M, "\a\r\n\tpressure          : %d\r\n",pressure);
+  APP_LOG(TS_OFF, VLEVEL_M, "\tpressure decimalen: %d\r\n",pressure_dec);
+  APP_LOG(TS_OFF, VLEVEL_M, "\tpressure bruikbaar: %d\r\n",pressure_bruikbaar);
 
 //  pressure = (uint16_t) Sensor_Data();
 
@@ -446,7 +450,10 @@ static void SendTxData(void)
 
 #ifdef CAYENNE_LPP
   CayenneLppReset();
-  CayenneLppAddBarometricPressure(channel++, pressure);
+  CayenneLppAddBarometricPressure(channel++, pressure_bruikbaar);
+
+//  CayenneLppAddBarometricPressure(channel++, pressure);
+
   CayenneLppAddTemperature(channel++, temperature);
   CayenneLppAddRelativeHumidity(channel++, (uint16_t)(sensor_data.humidity));
 
@@ -454,7 +461,9 @@ static void SendTxData(void)
       && (LmHandlerParams.ActiveRegion != LORAMAC_REGION_AS923))
   {
     CayenneLppAddDigitalInput(channel++, GetBatteryLevel());
-    CayenneLppAddBarometricPressure(channel++, pressure_dec);
+
+//    CayenneLppAddBarometricPressure(channel++, pressure_dec);
+
     CayenneLppAddDigitalOutput(channel++, AppLedStateOn);
   }
 

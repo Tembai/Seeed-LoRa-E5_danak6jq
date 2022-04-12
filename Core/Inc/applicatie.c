@@ -50,7 +50,7 @@ void Sensor_Init(void){
 
 
 		APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Init------------------------\r\n")
-		I2C_id();						//both of these work
+		I2C_id();
 
 	return;
 }

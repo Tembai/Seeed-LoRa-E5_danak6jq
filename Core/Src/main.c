@@ -93,13 +93,7 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
-
-
-
   MX_LoRaWAN_Init();
-
-
-
   MX_I2C2_Init();
   /* USER CODE BEGIN 2 */
 
@@ -124,58 +118,21 @@ int main(void)
 
 
 
-/*
+///*
   uint16_t pressure = 0;
-  uint16_t pressure_dec = 0;
-  int16_t temperature = 0;
-  sensor_t sensor_data;
-  */
+  float pressure_bruikbaar = 0;
+//  int16_t temperature = 0;
+  float press=0;
+//  sensor_t sensor_data;
+//  */
 
   while (1)
   {
     /* USER CODE END WHILE */
     MX_LoRaWAN_Process();
 
-
-
-/*
-//	  switch (Type.GetTypeCode(pressure_dec.GetType()))
-//	  {
-//	      case TypeCode.Decimal:
-//	          // Handle Decimal
-//		  APP_LOG(TS_OFF, VLEVEL_M, "\r\ncase decimal\r\n");
-//	          break;
-//
-//	      case TypeCode.Int32:
-//	          // Handle Int32
-//		  APP_LOG(TS_OFF, VLEVEL_M, "\r\ncase int32\r\n");
-//	          break;
-//	      default: APP_LOG(TS_OFF, VLEVEL_M, "\r\ndefault\r\n");
-//	  }
-
-	  EnvSensors_Read(&sensor_data);
-
-	#define N_DECIMAL_POINTS_PRECISION (1000) // n = 3. Three decimal points.
-
-
-
-	  pressure    = (uint16_t)(sensor_data.pressure * 100 / 10);
-	  pressure_dec    = (uint16_t)((int)(sensor_data.pressure * 100000)%100000);
-
-//		int integerPart = (int)sensor_data.pressure;
-//		int decimalPart = ((int)(sensor_data.pressure*N_DECIMAL_POINTS_PRECISION)%N_DECIMAL_POINTS_PRECISION);
-
-	  APP_LOG(TS_OFF, VLEVEL_M, "\r\npressure          : %d\r\n",pressure);
-	  APP_LOG(TS_OFF, VLEVEL_M, "\r\npressure decimalen: %d\r\n",pressure_dec);
-	  HAL_Delay(2000);
-
-*/
-
-
-
-
-	}
-
+    /* USER CODE BEGIN 3 */
+  }
   /* USER CODE END 3 */
 }
 
