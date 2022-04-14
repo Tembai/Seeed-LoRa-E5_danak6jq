@@ -19,7 +19,6 @@
 
 
 //======================================================================================================
-float Sensor_read();
 void Sensor_Init(void);
 //uint16_t Sensor_Data(void);
 float Sensor_Data(void);

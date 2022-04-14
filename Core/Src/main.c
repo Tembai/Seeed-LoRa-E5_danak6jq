@@ -114,18 +114,6 @@ int main(void)
 //	ret=platform_read(&hi2c2, 0x11, reg, 1);
 
 
-
-
-
-
-///*
-  uint16_t pressure = 0;
-  float pressure_bruikbaar = 0;
-//  int16_t temperature = 0;
-  float press=0;
-//  sensor_t sensor_data;
-//  */
-
   while (1)
   {
     /* USER CODE END WHILE */

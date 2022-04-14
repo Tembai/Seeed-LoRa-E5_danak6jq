@@ -37,15 +37,6 @@
 //}
 
 
-float Sensor_read(){
-	float pressure;
-	pressure = 4.0;
-
-	return pressure;
-}
-
-
-
 void Sensor_Init(void){
 
 
@@ -157,43 +148,8 @@ float Sensor_Data(void){
 //	      APP_LOG(TS_OFF, VLEVEL_M, "pressure [hPa]:%f\r\n", (float)(pressure_hPa));			// dit werkt dus niet ???
 	    } while(0);
 
-//	    uint16_t p_16;
-//		APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Data -> (float)pressure_hPa: %4.4f\r\n",pressure_hPa);
-//		  APP_LOG(TS_OFF, VLEVEL_M, "\r\nSensor_Data -> pressure_hPa: %d\r\n",pressure_hPa);
-//		APP_LOG(TS_OFF, VLEVEL_M, pressure_hPa);
-//		p_16= (uint16_t)(pressure_hPa * 100 / 10);      /* in hPa / 10 */
-//		APP_LOG(TS_OFF, VLEVEL_M, "Sensor_Data -> (uint16_t)pressure_hPa: %f\r\n");
-//		APP_LOG(TS_OFF, VLEVEL_M, p_16);
+
 		HAL_Delay(2500);
-
-
-/*
-//	     Read output only if new value is available
-	    lps22hh_reg_t reg;
-	    lps22hh_read_reg(&dev_ctx, lps22hh_STATUS, (uint8_t *)&reg, 1);
-
-	    if (reg.status.p_da) {
-	      memset(&data_raw_pressure, 0x00, sizeof(int32_t));
-	      lps22hh_pressure_raw_get(&dev_ctx, &data_raw_pressure);
-	      pressure_hPa = lps22hh_from_lsb_to_hpa(data_raw_pressure);
-//	      APP_LOG(TS_OFF, VLEVEL_M, "pressure [hPa]:%6.2f\r\n", pressure_hPa);
-	      APP_LOG(TS_OFF, VLEVEL_M, "pressure [hPa]:%x\r\n", pressure_hPa);
-//	      tx_com( tx_buffer, strlen( (char const *)tx_buffer ) );
-	    }
-
-	    if (reg.status.t_da) {
-	      memset(&data_raw_temperature, 0x00, sizeof(int16_t));
-	      lps22hh_temperature_raw_get(&dev_ctx, &data_raw_temperature);
-	      temperature_degC = lps22hh_from_lsb_to_degc(data_raw_temperature);
-//	      APP_LOG(TS_OFF, VLEVEL_M, "temperature [degC]:%6.2f\r\n", temperature_degC );
-	      APP_LOG(TS_OFF, VLEVEL_M, "temperature [degC]:%x\r\n", temperature_degC );
-//	      tx_com( tx_buffer, strlen( (char const *)tx_buffer ) );
-
-	      */
-
-
-
-
 	  return pressure_hPa;
 	  }
 
@@ -283,68 +239,6 @@ uint8_t I2C_id(void){
     ret=platform_read(&hi2c2, WhoAmI, var, 1);
 
 	APP_LOG(TS_OFF, VLEVEL_M, "WhoAmI ID: 0x%X\n",var[0]);
-
-//*/
-
-//  	static const uint8_t WhoAmI = 0x0F;				// register
-//    HAL_StatusTypeDef ret;
-//    uint8_t buf[3];
-//
-//
-//    buf[0] = 0x11;
-//    buf[0] = WhoAmI;
-//    buf[1] = 0;
-
-//    uint8_t arg=1;
-//    buf[2] = 0;
-////    uint8_t arg[2];
-////	arg[0]=buf[0];
-////	arg[1]=buf[1];
-////	arg[2]=buf[2];
-//
-//	uint8_t wr;
-//	wr=0x2;
-//
-//    ret=platform_write(&hi2c2, WhoAmI, buf,1);
-
-    /*
-    ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, buf, 2, 500); //LPS22HH_I2C_ADD_H & 0xFE
-
-    ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, WhoAmI, 1, 500); //LPS22HH_I2C_ADD_H & 0xFE
-	ret=HAL_I2C_Master_Receive(&hi2c2, addr_read, arg, 1, 500); //LPS22HH_I2C_ADD_H & 0xFE
-
-	APP_LOG(TS_OFF, VLEVEL_M, "val: 0x%X\n",arg);
-
-	*/
-
-//	APP_LOG(TS_OFF, VLEVEL_M, "id1: %X\n",buf[0]);
-//
-//    ret=platform_write(&hi2c2, 0x11, wr,1);
-////    ret=HAL_I2C_Master_Transmit(&hi2c2, addr_write, buf, 1, 500); //LPS22HH_I2C_ADD_H & 0xFE
-//    if ( ret != HAL_OK ) {
-//  	  APP_LOG(TS_OFF, VLEVEL_M, "Transmit doet het niet\n");
-//    }
-//    else{
-//      ret=platform_write(&hi2c2, 0x11, buf,0);
-//  	  ret=HAL_I2C_Master_Receive(&hi2c2, addr_read, buf, 1, 500); //LPS22HH_I2C_ADD_H & 0xFE
-//  	  if ( ret != HAL_OK ) {
-//  		  APP_LOG(TS_OFF, VLEVEL_M, "Receive doet het niet\n");
-//  	  }
-//  	  }
-//
-//    /*
-//    APP_LOG(TS_OFF, VLEVEL_M, "lengte van buf:%x\n",sizeof(buf[1]));
-//    int z=0;
-//    for (int x=0;x!=sizeof(arg);x++){
-//    	if(arg[x]){
-//    		z++;
-//    }
-//    }
-//    */
-//
-////    APP_LOG(TS_OFF, VLEVEL_M, "lengte van buf:%x\n",z);
-//	APP_LOG(TS_OFF, VLEVEL_M, "id2: %X\n",buf[0]);
-
 	 return var[0];
 }
 
