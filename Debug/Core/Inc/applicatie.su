@@ -1,8 +1,7 @@
 applicatie.c:40:6:Sensor_Init	8	static
 applicatie.c:51:7:Sensor_Data	32	static
-applicatie.c:167:6:I2C_scan	96	static
-applicatie.c:195:6:software_reset	16	static
-applicatie.c:209:6:one_shot_trigger	16	static
-applicatie.c:230:9:I2C_id	24	static
-applicatie.c:246:16:platform_write	56	dynamic
-applicatie.c:282:16:platform_read	40	static
+applicatie.c:167:6:software_reset	16	static
+applicatie.c:181:6:one_shot_trigger	16	static
+applicatie.c:202:9:I2C_id	24	static
+applicatie.c:218:16:platform_write	56	dynamic
+applicatie.c:254:16:platform_read	40	static
